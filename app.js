@@ -136,7 +136,7 @@ function footer() {
   <div class="wrap foot-top">
     <div style="display:flex;flex-direction:column;gap:12px;max-width:300px">
       <span class="brand">${X_MARK('#FFFFFF', 26)}<b style="color:#fff">NEXO</b></span>
-      <span>أدواتك العالمية، بعملتك المحلية.</span>
+      <span>اشتراكاتك العالمية، بعملتك المحلية.</span>
     </div>
     <nav aria-label="الاشتراكات"><b>الاشتراكات</b>${(state.products || []).slice(0, 5).map((p) => `<a href="#/p/${esc(p.slug)}">${esc(p.name)}</a>`).join('')}</nav>
     <nav aria-label="NEXO"><b>NEXO</b><a href="#/" data-scroll="how">إزاي بتشتغل</a><a href="#/" data-scroll="faq">الأسئلة الشائعة</a><a href="#/orders">طلباتي</a></nav>
@@ -272,7 +272,7 @@ async function homeView() {
 <section class="dark hero">
   <div class="wrap">
     <span class="eyebrow">NEXO SUBSCRIPTIONS</span>
-    <h1>أدواتك العالمية.<br><span>بعملتك المحلية.</span></h1>
+    <h1>اشتراكاتك العالمية<br><span>بعملتك المحلية</span></h1>
     <p class="lead">اشتراكات رسمية في ${products.slice(0, 4).map((p) => esc(p.name.split(' ')[0])).join('، ')}، بالجنيه المصري، مفعّلة على حسابك وبمتابعة فريق حقيقي.</p>
     <div class="ctas">
       <a class="btn btn-blue" href="#/" data-scroll="collection">اختار اشتراكك</a>
