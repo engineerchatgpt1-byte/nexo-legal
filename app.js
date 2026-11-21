@@ -246,6 +246,21 @@ function productCard(p) {
     </div>
   </article>`;
 }
+function skyHtml() {
+  // نجوم بأماكن ثابتة (عشوائية بس بنفس الترتيب كل مرة)
+  let seed = 7; const rnd = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
+  const stars = Array.from({ length: 80 }, () => {
+    const sz = (rnd() * 1.8 + 0.8).toFixed(1);
+    return `<i style="right:${(rnd() * 100).toFixed(2)}%;top:${(rnd() * 92).toFixed(2)}%;width:${sz}px;height:${sz}px;animation-delay:${(-rnd() * 4).toFixed(2)}s;animation-duration:${(2.5 + rnd() * 3).toFixed(2)}s"></i>`;
+  }).join('');
+  const cloud = (cls) => `<svg class="cloud ${cls}" viewBox="0 0 128 64"><g fill="#fff"><circle cx="40" cy="40" r="17"/><circle cx="64" cy="28" r="24"/><circle cx="90" cy="40" r="16"/><rect x="22" y="40" width="86" height="17" rx="8.5"/></g></svg>`;
+  return `<div class="sky" aria-hidden="true">
+    <div class="night"><div class="stars">${stars}</div><span class="shoot s1"></span><span class="shoot s2"></span>
+      <div class="sky-moon"><b></b><b></b><b></b></div></div>
+    <div class="day"><div class="sky-sun"><span class="rays"></span><span class="disc"></span></div>
+      ${cloud('c1')}${cloud('c2')}${cloud('c3')}${cloud('c4')}${cloud('c5')}</div>
+  </div>`;
+}
 function gridMark(products) {
   // 3 صفوف مربعات بتتحرك باستمرار (زي شريط The Engineer for CV) والأيقونات ماشية مع مربعاتها
   const n = products.length || 1;
@@ -272,6 +287,7 @@ async function homeView() {
   const cats = ['all', ...Object.keys(CATS).filter((c) => products.some((p) => p.category === c))];
   shell(`
 <section class="dark hero">
+  ${skyHtml()}
   <div class="wrap">
     <span class="eyebrow">NEXO SUBSCRIPTIONS</span>
     <h1>اشتراكاتك العالمية<br><span>بعملتك المحلية</span></h1>

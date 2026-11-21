@@ -378,3 +378,50 @@ html, body { overflow-x: clip; }
 .file:focus-within { border-color: var(--blue); }
 
 :root[data-theme="dark"] .aimg img { box-shadow: 0 18px 30px -16px rgba(0,0,0,.9); }
+
+/* ---------- سماء الهيرو: ليل (نجوم وقمر) / نهار (شمس وسحاب) ---------- */
+.hero { position: relative; isolation: isolate; }
+.hero > .wrap { position: relative; z-index: 1; }
+.sky { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.sky .night, .sky .day { position: absolute; inset: 0; transition: opacity .8s ease; }
+.sky .night { background: radial-gradient(120% 70% at 20% 0%, #1A2350 0%, #0C1128 45%, #07090F 100%); opacity: 0; }
+.sky .day { background: linear-gradient(180deg, #4EA2F2 0%, #8CC6FF 38%, #CFE8FF 72%, #EEF6FF 100%); opacity: 1; }
+:root[data-theme="dark"] .sky .night { opacity: 1; } :root[data-theme="dark"] .sky .day { opacity: 0; }
+.stars i { position: absolute; border-radius: 50%; background: #fff; box-shadow: 0 0 6px rgba(255,255,255,.8); animation: twinkle 3s ease-in-out infinite; }
+@keyframes twinkle { 0%, 100% { opacity: .25; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.15); } }
+.sky-moon { position: absolute; left: 7%; top: clamp(28px, 6vw, 70px); width: clamp(54px, 8vw, 96px); aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #FFFDF2 0%, #F3EDD3 55%, #DCD3B0 100%);
+  box-shadow: 0 0 40px 8px rgba(255,246,210,.35), 0 0 120px 40px rgba(142,165,255,.18); animation: float 9s ease-in-out infinite; }
+.sky-moon b { position: absolute; border-radius: 50%; background: rgba(170,160,120,.28); }
+.sky-moon b:nth-child(1) { width: 22%; height: 22%; left: 52%; top: 26%; } .sky-moon b:nth-child(2) { width: 14%; height: 14%; left: 28%; top: 58%; } .sky-moon b:nth-child(3) { width: 10%; height: 10%; left: 62%; top: 64%; }
+.shoot { position: absolute; width: 120px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, rgba(255,255,255,0), #fff); opacity: 0; transform: rotate(-28deg); }
+.shoot.s1 { top: 12%; left: 30%; animation: shoot 9s ease-in 2s infinite; } .shoot.s2 { top: 30%; left: 70%; animation: shoot 13s ease-in 7s infinite; }
+@keyframes shoot { 0% { opacity: 0; translate: 0 0; } 2% { opacity: 1; } 8% { opacity: 0; translate: -260px 140px; } 100% { opacity: 0; translate: -260px 140px; } }
+.sky-sun { position: absolute; left: 6%; top: clamp(20px, 5vw, 56px); width: clamp(70px, 10vw, 120px); aspect-ratio: 1; }
+.sky-sun .disc { position: absolute; inset: 18%; border-radius: 50%; background: radial-gradient(circle at 40% 38%, #FFFBD6 0%, #FFE066 45%, #FFB627 100%); box-shadow: 0 0 50px 14px rgba(255,214,90,.65), 0 0 140px 50px rgba(255,236,160,.45); }
+.sky-sun .rays { position: absolute; inset: -30%; border-radius: 50%; background: repeating-conic-gradient(rgba(255,240,170,.55) 0deg 6deg, transparent 6deg 24deg); -webkit-mask: radial-gradient(circle, #000 30%, transparent 70%); mask: radial-gradient(circle, #000 30%, transparent 70%); animation: spinr 40s linear infinite; }
+@keyframes spinr { to { rotate: 360deg; } }
+@keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+.cloud { position: absolute; left: 0; height: auto; filter: drop-shadow(0 8px 14px rgba(40,90,160,.18)); animation: drift linear infinite; }
+.cloud.c1 { width: 190px; top: 8%; opacity: .95; animation-duration: 70s; animation-delay: -10s; }
+.cloud.c2 { width: 130px; top: 26%; opacity: .8; animation-duration: 95s; animation-delay: -60s; }
+.cloud.c3 { width: 240px; top: 52%; opacity: .7; animation-duration: 120s; animation-delay: -35s; }
+.cloud.c4 { width: 110px; top: 70%; opacity: .85; animation-duration: 80s; animation-delay: -5s; }
+.cloud.c5 { width: 170px; top: 38%; opacity: .6; animation-duration: 105s; animation-delay: -85s; }
+@keyframes drift { from { transform: translateX(-280px); } to { transform: translateX(calc(100vw + 40px)); } }
+@media (max-width: 560px) { .sky-sun { width: 56px; left: 3%; top: 10px; } .sky-moon { width: 44px; left: 5%; top: 14px; } .cloud.c1 { width: 120px; } .cloud.c3 { width: 150px; } .cloud.c5 { width: 100px; } .shoot { width: 80px; } }
+
+/* الهيرو في الوضع النهاري: نص غامق فوق السماء الزرقا ومربعات زجاجية */
+:root:not([data-theme="dark"]) .hero { color: #0B1020; }
+:root:not([data-theme="dark"]) .hero .eyebrow { color: #1E3FD0; }
+:root:not([data-theme="dark"]) .hero h1 span { color: #2F55F0; }
+:root:not([data-theme="dark"]) .hero p.lead { color: #24324F; font-weight: 400; }
+:root:not([data-theme="dark"]) .hero .btn-ghost-d { color: #0B1020; border-color: rgba(11,16,32,.25); background: rgba(255,255,255,.35); }
+:root:not([data-theme="dark"]) .hero .mt { border-color: rgba(255,255,255,.75); background: rgba(255,255,255,.22); backdrop-filter: blur(2px); }
+:root:not([data-theme="dark"]) .hero .mt.lit { background: rgba(255,255,255,.7); border-color: #fff; }
+:root:not([data-theme="dark"]) .hero .facts { border-top-color: rgba(11,16,32,.12); }
+:root:not([data-theme="dark"]) .hero .facts > div { border-color: rgba(11,16,32,.12); }
+:root:not([data-theme="dark"]) .hero .facts .k { color: #1E3FD0; }
+:root:not([data-theme="dark"]) .hero .facts .s { color: #33415F; }
+:root[data-theme="dark"] .hero .mt.lit { background: rgba(16,19,31,.85); }
+@media (prefers-reduced-motion: reduce) { .sky *, .sky *::before { animation: none !important; } }
