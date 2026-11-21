@@ -458,3 +458,66 @@ main > section:not(.hero):not(.p-hero), main > .page, main > .p-main {
 .ssearch { min-width: 0; max-width: 100%; }
 .ssearch input { min-width: 0; width: 100%; }
 .store-top > div { min-width: 0; }
+
+/* =========================================================
+   ضبط الألوان والخطوط (نظام موحّد)
+   ========================================================= */
+:root { --primary: #2F55F0; --primary-h: #2448DA; --accent: #FF7A1F; --accent-ink: #C2560F; --accent-tint: #FFF1E6; }
+:root[data-theme="dark"] { --accent-ink: #FFB27A; --accent-tint: rgba(255,122,31,.16); }
+
+/* الخطوط: Plex Arabic للنص كله، Space Grotesk للأرقام والعناوين الإنجليزي الصغيرة بس */
+body { font-size: 16px; font-weight: 400; text-rendering: optimizeLegibility; font-feature-settings: "kern" 1; }
+h1, h2, h3, .h2, .hero h1, .p-hero h1, .attl, .panel h1 { letter-spacing: 0 !important; font-weight: 700; }
+.hero h1 { line-height: 1.22; }
+.h2 { line-height: 1.3; }
+.p-hero h1 { line-height: 1.2; }
+.eyebrow { font-family: var(--en); font-size: 11.5px; font-weight: 600; letter-spacing: .24em; }
+.facts .k, .mini-facts .k { font-family: var(--en); font-weight: 600; letter-spacing: .2em; }
+.facts .v { font-weight: 700; }
+p, .lead, .txt p, .faq p, .steps .d, .asub { line-height: 1.85; }
+.txt p, .faq p, .steps .d { color: var(--text-2); }
+.hint, .note, .acat, .aperks, .ohead .no, .orow .meta { color: var(--muted); }
+
+/* الأرقام والأسعار بخط واحد وأرقام متساوية العرض */
+.aprice b, .total b, .plan .pr, .ohead + .row-between b, .row-between b, .pm .acc, .code-box .code, .steps .n, .orow .meta span:nth-child(2) {
+  font-family: var(--en); font-variant-numeric: tabular-nums lining-nums; letter-spacing: 0; }
+.aprice b { font-size: 30px; font-weight: 700; }
+.total b { font-weight: 700; }
+
+/* زرار أساسي واحد بلون البراند */
+.btn-blue, .btn-buy, :root[data-theme="dark"] .btn-buy { background: var(--primary); color: #fff; }
+.btn-blue:hover, .btn-buy:hover, :root[data-theme="dark"] .btn-buy:hover { background: var(--primary-h); }
+.btn { font-weight: 600; letter-spacing: 0; }
+.btn-buy { box-shadow: 0 8px 20px -12px rgba(47,85,240,.7); }
+
+/* اختيارات الفلاتر والتصنيفات بنفس لون البراند */
+.chip[aria-pressed="true"], .fopt:has(input:checked) { background: var(--primary) !important; border-color: var(--primary) !important; color: #fff !important; }
+@media (min-width: 901px) { .fopt:has(input:checked) { background: var(--blue-tint) !important; color: var(--text) !important; border-color: transparent !important; } }
+
+/* البادجات والخصومات بالبرتقالي بتاع البراند بدل الأحمر */
+.abadge.best { background: var(--accent); color: #fff; }
+.adeal { color: var(--accent-ink); }
+.adeal span { background: var(--accent); color: #fff; }
+.plan .save { color: var(--accent-ink); }
+:root[data-theme="dark"] .plan .save { color: #FFB27A; }
+.p-hero .eyebrow { color: #FFB27A !important; }
+
+/* أخضر واحد لكل علامات "تمام" */
+.aperks li.ok, .aperks li.ok svg, .fgroup.trust svg { color: var(--st-green); }
+.checks svg path { stroke: var(--primary); }
+:root[data-theme="dark"] .checks svg path { stroke: #8EA5FF; }
+
+/* روابط وأيقونات */
+.link, .copy { color: var(--primary); }
+:root[data-theme="dark"] .link, :root[data-theme="dark"] .copy, :root[data-theme="dark"] .attl a:hover { color: #9FB3FF; }
+.attl a:hover { color: var(--primary); }
+
+/* مقاسات نص متناسقة على الموبايل */
+@media (max-width: 600px) {
+  body { font-size: 15.5px; }
+  .h2 { font-size: 30px; }
+  .txt p, .faq p { font-size: 16px; }
+  .faq summary { font-size: 17px; }
+}
+.site-head .btn-white, :root:not([data-theme="dark"]) .site-head .btn-white { background: var(--primary); color: #fff; }
+.site-head .btn-white:hover { background: var(--primary-h); }
