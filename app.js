@@ -142,7 +142,7 @@ function footer() {
     <nav aria-label="NEXO"><b>NEXO</b><a href="#/" data-scroll="how">إزاي بتشتغل</a><a href="#/" data-scroll="faq">الأسئلة الشائعة</a><a href="#/orders">طلباتي</a></nav>
     <nav aria-label="قانوني"><b>قانوني</b><a href="privacy.html">سياسة الخصوصية</a></nav>
   </div>
-  <div class="wrap foot-bot"><span>© ${new Date().getFullYear()} NEXO. All rights reserved.</span><span class="en" style="letter-spacing:.2em">CAIRO · EGYPT</span></div>
+  <div class="wrap foot-bot"><span dir="ltr">© ${new Date().getFullYear()} NEXO. All rights reserved.</span><span class="en" style="letter-spacing:.2em">CAIRO · EGYPT</span></div>
 </footer>`;
 }
 function bindChrome() {
