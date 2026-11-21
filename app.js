@@ -244,7 +244,6 @@ function gridMark(products) {
       const set = r.pat.map(tile).join('');
       return `<div class="mrow"><div class="mtrack ${r.dir}" style="--dur:${r.dur}s">${set}${set}</div></div>`;
     }).join('')}
-    <div class="core">${X_MARK('#2F55F0', 62)}</div>
   </div>`;
 }
 async function homeView() {
