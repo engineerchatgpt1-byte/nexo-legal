@@ -440,3 +440,15 @@ main > .p-main { padding-left: max(clamp(18px, 4vw, 28px), calc((100% - var(--wr
 .sky-sun { top: clamp(84px, 11vw, 110px) !important; }
 .sky-moon { top: clamp(90px, 11vw, 120px) !important; }
 @media (max-width: 560px) { .sky-sun { top: 80px !important; } .sky-moon { top: 86px !important; } }
+
+/* ---------- شريط علوي شفاف (زجاجي لما تنزل) ---------- */
+:root { --head-fg: #0B1020; --head-muted: #33415F; --head-bg: rgba(255,255,255,.62); --head-line: rgba(11,16,32,.08); --head-hover: rgba(11,16,32,.07); }
+:root[data-theme="dark"] { --head-fg: #FFFFFF; --head-muted: #B7BED2; --head-bg: rgba(7,9,15,.55); --head-line: rgba(255,255,255,.08); --head-hover: rgba(255,255,255,.08); }
+.site-head { background: transparent; color: var(--head-fg); border-bottom: 1px solid transparent; transition: background .25s ease, border-color .25s ease, backdrop-filter .25s ease; }
+.site-head.scrolled, .site-head.menu-open { background: var(--head-bg); -webkit-backdrop-filter: saturate(1.5) blur(16px); backdrop-filter: saturate(1.5) blur(16px); border-color: var(--head-line); }
+.site-head .nav { color: var(--head-muted); } .site-head .nav a:hover { color: var(--head-fg); }
+.site-head .icon-btn { color: var(--head-fg); } .site-head .icon-btn:hover { background: var(--head-hover); }
+.site-head .drawer { background: transparent; border-top-color: var(--head-line); }
+.site-head .drawer a { color: var(--head-muted); border-bottom-color: var(--head-line); }
+:root:not([data-theme="dark"]) .site-head .btn-white { background: #0B1020; color: #fff; }
+#toast { visibility: hidden; } #toast.show { visibility: visible; }

@@ -122,7 +122,7 @@ function header() {
   return `
 <header class="site-head" id="head">
   <div class="wrap bar">
-    <a class="brand" href="#/" aria-label="NEXO — الرئيسية">${X_MARK()}<b>NEXO</b></a>
+    <a class="brand" href="#/" aria-label="NEXO — الرئيسية">${X_MARK('currentColor')}<b>NEXO</b></a>
     <nav class="nav" aria-label="القائمة الرئيسية">
       <a href="#/" data-scroll="collection">الاشتراكات</a>
       <a href="#/" data-scroll="how">إزاي بتشتغل</a>
@@ -170,7 +170,7 @@ function bindChrome() {
   document.querySelectorAll('[data-theme-toggle]').forEach((b) => b.addEventListener('click', () => setTheme(currentTheme() === 'dark' ? 'light' : 'dark')));
   setTheme(currentTheme(), false);
   qs('#menuBtn')?.addEventListener('click', (e) => {
-    const d = qs('#drawer'); d.classList.toggle('open');
+    const d = qs('#drawer'); d.classList.toggle('open'); qs('#head').classList.toggle('menu-open', d.classList.contains('open'));
     e.currentTarget.setAttribute('aria-expanded', d.classList.contains('open'));
   });
   document.querySelectorAll('[data-scroll]').forEach((a) => a.addEventListener('click', (e) => {
