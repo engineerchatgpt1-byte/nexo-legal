@@ -228,14 +228,40 @@ function productCard(p) {
   </article>`;
 }
 function gridMark(products) {
-  const pick = (i) => products[i];
-  const tile = (p) => p ? `<div class="on">${logo(p)}</div>` : '<div class="f3"></div>';
-  const cells = ['f2', 'f1', 'P2', 'f3', 'P3', 'f1', 'f2', 'f1', 'P0', 'f3', 'CORE', 'f3', 'P1', 'f1', 'f2', 'f2', 'f1', 'f3', 'f1', 'f2', 'f2'];
-  return `<div class="grid-mark" aria-hidden="true">${cells.map((c) => {
-    if (c === 'CORE') return `<div class="core">${X_MARK('#2F55F0', 62)}</div>`;
-    if (c[0] === 'P') return tile(pick(Number(c[1])));
-    return `<div class="${c}"></div>`;
+  const start = [2, 4, 8, 12];
+  const faint = ['f2', 'f1', '', 'f3', '', 'f1', 'f2', 'f1', '', 'f3', '', 'f3', '', 'f1', 'f2', 'f2', 'f1', 'f3', 'f1', 'f2', 'f2'];
+  return `<div class="grid-mark" id="gridMark" aria-hidden="true">${faint.map((f, i) => {
+    if (i === 10) return `<div class="core">${X_MARK('#2F55F0', 62)}</div>`;
+    const pi = start.indexOf(i);
+    const p = pi >= 0 ? products[pi] : null;
+    return `<div class="cell ${f || 'f3'}" style="--i:${i}">${p ? `<span class="lg" style="--d:${(pi * 0.7).toFixed(1)}s">${logo(p)}</span>` : ''}</div>`;
   }).join('')}</div>`;
+}
+function animateGrid() {
+  const grid = qs('#gridMark');
+  if (!grid || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const cells = [...grid.querySelectorAll('.cell')];
+  let last = null;
+  const hop = () => {
+    if (document.hidden) return;
+    const full = cells.filter((c) => c.querySelector('.lg') && c !== last);
+    const empty = cells.filter((c) => !c.querySelector('.lg'));
+    if (!full.length || !empty.length) return;
+    const from = full[Math.floor(Math.random() * full.length)];
+    // يفضّل خانة قريبة من مكانه علشان الحركة تبان طبيعية
+    const fi = cells.indexOf(from), col = (k) => Number(k.style.getPropertyValue('--i')) % 7;
+    const near = empty.filter((c) => Math.abs(col(c) - col(from)) <= 2 && c !== from);
+    const pool = near.length ? near : empty;
+    const to = pool[Math.floor(Math.random() * pool.length)];
+    const lg = from.querySelector('.lg');
+    lg.classList.add('out');
+    setTimeout(() => { to.appendChild(lg); from.classList.remove('lit'); to.classList.add('lit'); requestAnimationFrame(() => lg.classList.remove('out')); }, 450);
+    last = to;
+    void fi;
+  };
+  cells.forEach((c) => c.querySelector('.lg') && c.classList.add('lit'));
+  const t = setInterval(hop, 2200);
+  state.cleanup.push(() => clearInterval(t));
 }
 async function homeView() {
   loadingView();
@@ -348,6 +374,7 @@ async function homeView() {
     </div>
   </div>
 </section>`);
+  animateGrid();
   const applyStore = () => {
     const q = qs('#q').value.trim().toLowerCase();
     const cat = qs('input[name=cat]:checked')?.value || 'all';
