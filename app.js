@@ -186,16 +186,46 @@ function shell(inner, { withFooter = true } = {}) {
 const loadingView = () => shell('<div class="loading"><span class="spin" aria-label="جاري التحميل"></span></div>', { withFooter: false });
 
 // ---------------- الرئيسية ----------------
+const perLabel = (d) => d >= 360 ? 'سنة' : d >= 85 && d <= 95 ? '3 شهور' : d >= 175 && d <= 185 ? '6 شهور' : 'شهر';
+function cardStats(p) {
+  const cheapest = p.plans.reduce((a, b) => (b.price_egp < a.price_egp ? b : a));
+  const deal = p.plans.filter((x) => x.compare_at_price_egp > x.price_egp)
+    .map((x) => ({ x, pct: Math.round((1 - x.price_egp / x.compare_at_price_egp) * 100) }))
+    .sort((a, b) => b.pct - a.pct)[0];
+  return { cheapest, deal };
+}
+const STORE_ICON = {
+  bolt: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>',
+  shield: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>',
+  user: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
+  search: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>',
+};
 function productCard(p) {
-  const from = Math.min(...p.plans.map((x) => x.price_egp));
-  const per = p.plans.find((x) => x.price_egp === from)?.duration_days >= 360 ? 'سنة' : 'شهر';
-  return `<a class="pcard" href="#/p/${esc(p.slug)}">
-    <div class="cov" style="background:${darken(p.brand_color)}">${logo(p)}</div>
-    <div class="body">
-      <div class="top"><span class="name">${esc(p.name)}</span>${p.is_featured ? '<span class="tag">BESTSELLER</span>' : ''}</div>
-      <span class="sub">${esc(p.tagline)}</span>
-      <span class="price">${p.plans.length > 1 ? 'من ' : ''}${egp(from)} <small>/ ${per}</small></span>
-    </div></a>`;
+  const { cheapest, deal } = cardStats(p);
+  const multi = p.plans.length > 1;
+  const [whole] = String(Number(cheapest.price_egp).toLocaleString('en-US')).split('.');
+  const eta = (cheapest.delivery_eta || 'خلال ساعتين').replace(' في مواعيد العمل', '');
+  return `<article class="acard">
+    <a class="aimg" href="#/p/${esc(p.slug)}" tabindex="-1" aria-hidden="true" style="--b:${esc(p.brand_color || '#2F55F0')}">
+      ${p.is_featured ? '<span class="abadge best">الأكثر طلبًا</span>' : ''}
+      ${logo(p)}
+    </a>
+    <div class="ainfo">
+      <span class="acat">${esc(CATS[p.category] || 'اشتراك')}</span>
+      <h3 class="attl"><a href="#/p/${esc(p.slug)}">${esc(p.name)}</a></h3>
+      <p class="asub">${esc(p.tagline)}</p>
+      ${deal ? `<div class="adeal"><span>خصم ${deal.pct}%</span>وفّر ${egp(deal.x.compare_at_price_egp - deal.x.price_egp)}${multi ? ` في ${esc(deal.x.duration_label || deal.x.name)}` : ''}</div>` : ''}
+      <div class="aprice">${multi ? '<span class="from">يبدأ من</span>' : ''}<b>${whole}</b><span class="cur">ج.م</span><span class="per">/ ${perLabel(cheapest.duration_days)}</span></div>
+      ${deal && !multi ? `<span class="awas">السعر قبل الخصم: <s>${egp(deal.x.compare_at_price_egp)}</s></span>` : ''}
+      ${multi ? `<div class="aplans">${p.plans.map((x) => `<span>${esc(x.duration_label || x.name)}</span>`).join('')}</div>` : ''}
+      <ul class="aperks">
+        <li class="ok">${STORE_ICON.bolt}تفعيل ${esc(eta)}</li>
+        <li>${STORE_ICON.shield}${esc(cheapest.warranty_text || 'ضمان طول مدة الاشتراك')}</li>
+        <li>${STORE_ICON.user}على حسابك أنت</li>
+      </ul>
+      <a class="btn btn-buy" href="#/p/${esc(p.slug)}">اطلب الآن</a>
+    </div>
+  </article>`;
 }
 function gridMark(products) {
   const pick = (i) => products[i];
@@ -231,13 +261,29 @@ async function homeView() {
   </div>
 </section>
 
-<section class="sec" id="collection">
+<section class="store" id="collection">
   <div class="wrap">
-    <div class="sec-head">
-      <div><span class="eyebrow">THE COLLECTION</span><h2 class="h2">كل اللي بتشتغل بيه.<br>في مكان واحد.</h2></div>
-      ${cats.length > 2 ? `<div class="chips" role="group" aria-label="التصنيفات">${cats.map((c, i) => `<button class="chip" data-cat="${c}" aria-pressed="${i === 0}">${c === 'all' ? 'الكل' : CATS[c]}</button>`).join('')}</div>` : ''}
+    <div class="store-top">
+      <div><span class="eyebrow">THE COLLECTION</span><h2 class="h2">كل الاشتراكات</h2></div>
+      <label class="ssearch">${STORE_ICON.search}<span class="sr">ابحث في الاشتراكات</span><input id="q" type="search" placeholder="ابحث عن اشتراك… ChatGPT، Canva" autocomplete="off"></label>
     </div>
-    <div class="cards" id="cards">${products.map(productCard).join('') || '<p class="empty">مفيش اشتراكات متاحة دلوقتي.</p>'}</div>
+    <div class="store-body">
+      <aside class="sfilters" aria-label="الفلاتر">
+        <div class="fgroup"><b>التصنيف</b>
+          ${cats.map((c, i) => `<label class="fopt"><input type="radio" name="cat" value="${c}" ${i === 0 ? 'checked' : ''}><span>${c === 'all' ? 'كل الاشتراكات' : CATS[c]}</span><em>${c === 'all' ? products.length : products.filter((p) => p.category === c).length}</em></label>`).join('')}
+        </div>
+        <div class="fgroup"><b>العروض</b><label class="fopt chk"><input type="checkbox" id="onlyDeals"><span>عليها خصم</span></label></div>
+        <div class="fgroup trust"><b>مع كل اشتراك</b><span>${STORE_ICON.bolt}تفعيل خلال ساعتين</span><span>${STORE_ICON.shield}ضمان طول المدة</span><span>${STORE_ICON.user}دفع بالجنيه المصري</span></div>
+      </aside>
+      <div class="sresults">
+        <div class="sbar"><span id="count" aria-live="polite"></span>
+          <label class="ssort">ترتيب حسب:
+            <select id="sort"><option value="featured">الأكثر طلبًا</option><option value="low">السعر: من الأقل</option><option value="high">السعر: من الأعلى</option><option value="deal">أكبر خصم</option></select>
+          </label>
+        </div>
+        <div class="agrid" id="cards"></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -302,11 +348,25 @@ async function homeView() {
     </div>
   </div>
 </section>`);
-  document.querySelectorAll('[data-cat]').forEach((b) => b.addEventListener('click', () => {
-    document.querySelectorAll('[data-cat]').forEach((x) => x.setAttribute('aria-pressed', x === b));
-    const c = b.dataset.cat;
-    qs('#cards').innerHTML = products.filter((p) => c === 'all' || p.category === c).map(productCard).join('');
-  }));
+  const applyStore = () => {
+    const q = qs('#q').value.trim().toLowerCase();
+    const cat = qs('input[name=cat]:checked')?.value || 'all';
+    const deals = qs('#onlyDeals').checked;
+    const sort = qs('#sort').value;
+    let list = products.filter((p) => (cat === 'all' || p.category === cat)
+      && (!deals || cardStats(p).deal)
+      && (!q || `${p.name} ${p.tagline} ${CATS[p.category] || ''}`.toLowerCase().includes(q)));
+    const price = (p) => cardStats(p).cheapest.price_egp;
+    if (sort === 'low') list.sort((a, b) => price(a) - price(b));
+    else if (sort === 'high') list.sort((a, b) => price(b) - price(a));
+    else if (sort === 'deal') list.sort((a, b) => (cardStats(b).deal?.pct || 0) - (cardStats(a).deal?.pct || 0));
+    else list.sort((a, b) => (b.is_featured - a.is_featured) || (a.sort_order - b.sort_order));
+    qs('#count').textContent = `${list.length} ${list.length === 1 ? 'اشتراك' : list.length <= 10 ? 'اشتراكات' : 'اشتراك'}`;
+    qs('#cards').innerHTML = list.map(productCard).join('') || '<p class="empty">مفيش اشتراكات بالمواصفات دي. جرّب كلمة تانية أو شيل الفلتر.</p>';
+  };
+  ['#q', '#sort', '#onlyDeals'].forEach((s2) => qs(s2).addEventListener('input', applyStore));
+  document.querySelectorAll('input[name=cat]').forEach((r) => r.addEventListener('change', applyStore));
+  applyStore();
   const to = sessionStorage.getItem('scrollTo');
   if (to) { sessionStorage.removeItem('scrollTo'); setTimeout(() => qs('#' + to)?.scrollIntoView(), 50); }
 }
