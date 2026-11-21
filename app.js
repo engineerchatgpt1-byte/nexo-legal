@@ -1,5 +1,6 @@
 // NEXO — الموقع (اتجاه D). JavaScript عادي + Supabase، من غير أي framework علشان يفتح بسرعة.
 import { createClient } from './vendor/supabase.js';
+import { mountSky } from './sky.js?v=1795285116';
 
 const SUPABASE_URL = 'https://okzitsbqkohgozuwdewh.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_6U1RsmsvDeBUUQgirfALFA_Ox0nxeyp';
@@ -247,18 +248,12 @@ function productCard(p) {
   </article>`;
 }
 function skyHtml() {
-  // نجوم بأماكن ثابتة (عشوائية بس بنفس الترتيب كل مرة)
-  let seed = 7; const rnd = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
-  const stars = Array.from({ length: 80 }, () => {
-    const sz = (rnd() * 1.8 + 0.8).toFixed(1);
-    return `<i style="right:${(rnd() * 100).toFixed(2)}%;top:${(rnd() * 92).toFixed(2)}%;width:${sz}px;height:${sz}px;animation-delay:${(-rnd() * 4).toFixed(2)}s;animation-duration:${(2.5 + rnd() * 3).toFixed(2)}s"></i>`;
-  }).join('');
-  const cloud = (cls) => `<svg class="cloud ${cls}" viewBox="0 0 128 64"><g fill="#fff"><circle cx="40" cy="40" r="17"/><circle cx="64" cy="28" r="24"/><circle cx="90" cy="40" r="16"/><rect x="22" y="40" width="86" height="17" rx="8.5"/></g></svg>`;
-  return `<div class="sky" aria-hidden="true">
-    <div class="night"><div class="stars">${stars}</div><span class="shoot s1"></span><span class="shoot s2"></span>
-      <div class="sky-moon"><b></b><b></b><b></b></div></div>
-    <div class="day"><div class="sky-sun"><span class="rays"></span><span class="disc"></span></div>
-      ${cloud('c1')}${cloud('c2')}${cloud('c3')}${cloud('c4')}${cloud('c5')}</div>
+  // نجوم قليلة لامعة بتلمع فوق الصورة المرسومة
+  let seed = 11; const r = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
+  const tw = Array.from({ length: 18 }, () => `<i style="right:${(r() * 100).toFixed(1)}%;top:${(r() * 80).toFixed(1)}%;animation-delay:${(-r() * 5).toFixed(1)}s;animation-duration:${(3 + r() * 4).toFixed(1)}s"></i>`).join('');
+  return `<div class="sky" id="sky" aria-hidden="true">
+    <div class="night"><canvas class="bg"></canvas><div class="twinkle">${tw}</div><span class="shoot s1"></span><span class="shoot s2"></span><canvas class="moon-cv"></canvas></div>
+    <div class="day"><canvas class="bg"></canvas><canvas class="sun-cv"></canvas><canvas class="cl l1"></canvas><canvas class="cl l2"></canvas></div>
   </div>`;
 }
 function gridMark(products) {
@@ -392,6 +387,7 @@ async function homeView() {
     </div>
   </div>
 </section>`);
+  state.cleanup.push(mountSky(qs('#sky')));
   const applyStore = () => {
     const q = qs('#q').value.trim().toLowerCase();
     const cat = qs('input[name=cat]:checked')?.value || 'all';
