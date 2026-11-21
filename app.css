@@ -382,7 +382,7 @@ html, body { overflow-x: clip; }
 /* ---------- سماء الهيرو: ليل (نجوم وقمر) / نهار (شمس وسحاب) ---------- */
 .hero { position: relative; isolation: isolate; }
 .hero > .wrap { position: relative; z-index: 1; }
-.sky { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.sky { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
 .sky .night, .sky .day { position: absolute; inset: 0; transition: opacity .8s ease; }
 .sky .night { background: radial-gradient(120% 70% at 20% 0%, #1A2350 0%, #0C1128 45%, #07090F 100%); opacity: 0; }
 .sky .day { background: linear-gradient(180deg, #4EA2F2 0%, #8CC6FF 38%, #CFE8FF 72%, #EEF6FF 100%); opacity: 1; }
@@ -425,3 +425,18 @@ html, body { overflow-x: clip; }
 :root:not([data-theme="dark"]) .hero .facts .s { color: #33415F; }
 :root[data-theme="dark"] .hero .mt.lit { background: rgba(16,19,31,.85); }
 @media (prefers-reduced-motion: reduce) { .sky *, .sky *::before { animation: none !important; } }
+
+/* ---------- السما خلفية للموقع كله ---------- */
+:root { --veil: rgba(255,255,255,.55); --veil-2: rgba(243,245,249,.68); }
+:root[data-theme="dark"] { --veil: rgba(7,9,15,.42); --veil-2: rgba(11,14,23,.58); }
+body { background: transparent; }
+html { background: var(--bg); }
+.hero, .dark.hero { background: transparent; }
+:root[data-theme="dark"] .hero { border-bottom: 0; }
+main > section:not(.hero):not(.p-hero), main > .page, main > .p-main, main > .wrap { background: var(--veil); }
+main > .p-main { padding-left: max(clamp(18px, 4vw, 28px), calc((100% - var(--wrap)) / 2)); padding-right: max(clamp(18px, 4vw, 28px), calc((100% - var(--wrap)) / 2)); max-width: none; }
+.sec-soft, .store { background: var(--veil-2) !important; }
+.page { background: var(--veil) !important; }
+.sky-sun { top: clamp(84px, 11vw, 110px) !important; }
+.sky-moon { top: clamp(90px, 11vw, 120px) !important; }
+@media (max-width: 560px) { .sky-sun { top: 80px !important; } .sky-moon { top: 86px !important; } }

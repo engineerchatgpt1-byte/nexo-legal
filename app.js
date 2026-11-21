@@ -197,6 +197,7 @@ function bindChrome() {
   });
 }
 function shell(inner, { withFooter = true } = {}) {
+  if (!document.getElementById('skyBg')) { const t = document.createElement('div'); t.innerHTML = skyHtml(); const el = t.firstElementChild; el.id = 'skyBg'; document.body.prepend(el); }
   app.innerHTML = header() + `<main id="main">${inner}</main>` + (withFooter ? footer() : '');
   bindChrome();
   window.scrollTo(0, 0);
@@ -287,7 +288,6 @@ async function homeView() {
   const cats = ['all', ...Object.keys(CATS).filter((c) => products.some((p) => p.category === c))];
   shell(`
 <section class="dark hero">
-  ${skyHtml()}
   <div class="wrap">
     <span class="eyebrow">NEXO SUBSCRIPTIONS</span>
     <h1>اشتراكاتك العالمية<br><span>بعملتك المحلية</span></h1>
