@@ -42,6 +42,8 @@ const ICON = {
   tick: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2F55F0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>',
   orders: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>',
   user: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
+  sun: '<svg class="sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></svg>',
+  moon: '<svg class="moon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>',
   menu: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
   send: '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 3L3 10.5l7 2.5 2.5 7z"/></svg>',
   image: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>',
@@ -101,6 +103,19 @@ async function loadProfile() {
   state.profile = data;
 }
 
+// ---------------- الوضع النهاري / الليلي ----------------
+function currentTheme() { return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'; }
+function setTheme(t, save = true) {
+  document.documentElement.dataset.theme = t;
+  document.querySelector('meta[name=theme-color]')?.setAttribute('content', t === 'dark' ? '#0B0E17' : '#07090F');
+  document.querySelectorAll('[data-theme-toggle]').forEach((b) => b.setAttribute('aria-label', t === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'));
+  if (save) try { localStorage.setItem('nexo-theme', t); } catch {}
+}
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', (e) => {
+  let saved = null; try { saved = localStorage.getItem('nexo-theme'); } catch {}
+  if (!saved) setTheme(e.matches ? 'dark' : 'light', false);
+});
+
 // ---------------- الهيدر والفوتر ----------------
 function header() {
   const logged = !!state.session;
@@ -114,6 +129,7 @@ function header() {
       <a href="#/" data-scroll="faq">الأسئلة الشائعة</a>
     </nav>
     <div class="head-actions">
+      <button class="icon-btn theme-btn" data-theme-toggle aria-label="تبديل الوضع الليلي">${ICON.moon}${ICON.sun}</button>
       ${logged
         ? `<a class="icon-btn" href="#/orders" aria-label="طلباتي">${ICON.orders}</a>
            <button class="icon-btn" id="accBtn" aria-label="الحساب" aria-haspopup="true" aria-expanded="false">${ICON.user}</button>`
@@ -151,6 +167,8 @@ function bindChrome() {
   window.addEventListener('scroll', onScroll, { passive: true });
   state.cleanup.push(() => window.removeEventListener('scroll', onScroll));
   onScroll();
+  document.querySelectorAll('[data-theme-toggle]').forEach((b) => b.addEventListener('click', () => setTheme(currentTheme() === 'dark' ? 'light' : 'dark')));
+  setTheme(currentTheme(), false);
   qs('#menuBtn')?.addEventListener('click', (e) => {
     const d = qs('#drawer'); d.classList.toggle('open');
     e.currentTarget.setAttribute('aria-expanded', d.classList.contains('open'));
@@ -307,13 +325,13 @@ async function homeView() {
     </div>
     <div class="vis">
       <div class="phone"><div class="scr">
-        <div style="padding:20px 18px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #ECEEF3">
+        <div style="padding:20px 18px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)">
           ${products[0] ? logo(products[0]).replace('class=""', 'style="width:40px;height:40px;border-radius:11px"') : ''}
-          <div style="flex:1"><div style="font-size:15px;font-weight:600">${esc(products[0]?.name || 'ChatGPT Plus')}</div><div class="en" style="font-size:12px;color:#5B6480">NX-10012</div></div>
+          <div style="flex:1"><div style="font-size:15px;font-weight:600">${esc(products[0]?.name || 'ChatGPT Plus')}</div><div class="en" style="font-size:12px;color:var(--muted)">NX-10012</div></div>
           <span class="status orange">جاري التفعيل</span>
         </div>
-        <div style="padding:16px 18px;display:flex;flex-direction:column;gap:10px;background:#F7F8FB">
-          <span style="align-self:center;font-size:12px;color:#5B6480;background:#fff;border:1px solid #ECEEF3;padding:5px 12px;border-radius:999px">تم تأكيد الدفع</span>
+        <div style="padding:16px 18px;display:flex;flex-direction:column;gap:10px;background:var(--soft)">
+          <span style="align-self:center;font-size:12px;color:var(--muted);background:var(--surface);border:1px solid var(--line);padding:5px 12px;border-radius:999px">تم تأكيد الدفع</span>
           <div class="bub them" style="max-width:88%"><span class="who">فريق NEXO</span>تم تأكيد الدفع. ابعتلنا الإيميل المسجّل علشان نبدأ التفعيل.</div>
           <div class="bub me ltr" style="max-width:88%">ahmed.k@gmail.com</div>
           <div class="bub them" style="max-width:88%"><span class="who">فريق NEXO</span>تمام، بدأنا التفعيل وهيوصلك إشعار أول ما يخلص.</div>
@@ -408,9 +426,9 @@ async function productView(slug) {
       <ul class="checks">${x.required_fields.map((f) => `<li>${ICON.check}${esc(f.label)}</li>`).join('')}</ul></div>` : ''}
     <div class="panel" style="background:var(--soft);border:0"><span class="eyebrow">AFTER YOU ORDER</span><h2 style="margin:8px 0 18px;font-size:24px">بعد ما تطلب</h2>
       <ol class="steps" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
-        <li style="background:#fff;border:0"><span class="n" style="font-size:28px">01</span><span class="t" style="font-size:16px">حوّل المبلغ</span><span class="d" style="font-size:14px">InstaPay أو فودافون كاش، واكتب رقم العملية.</span></li>
-        <li style="background:#fff;border:0"><span class="n" style="font-size:28px">02</span><span class="t" style="font-size:16px">الفريق يأكد</span><span class="d" style="font-size:14px">ولو محتاج حاجة منك هيكتبلك في شات الطلب.</span></li>
-        <li style="background:#fff;border:0"><span class="n" style="font-size:28px;color:var(--orange)">03</span><span class="t" style="font-size:16px">اشتغل</span><span class="d" style="font-size:14px">إشعار بالتفعيل وتاريخ انتهاء الاشتراك.</span></li>
+        <li style="background:var(--surface);border:0"><span class="n" style="font-size:28px">01</span><span class="t" style="font-size:16px">حوّل المبلغ</span><span class="d" style="font-size:14px">InstaPay أو فودافون كاش، واكتب رقم العملية.</span></li>
+        <li style="background:var(--surface);border:0"><span class="n" style="font-size:28px">02</span><span class="t" style="font-size:16px">الفريق يأكد</span><span class="d" style="font-size:14px">ولو محتاج حاجة منك هيكتبلك في شات الطلب.</span></li>
+        <li style="background:var(--surface);border:0"><span class="n" style="font-size:28px;color:var(--orange)">03</span><span class="t" style="font-size:16px">اشتغل</span><span class="d" style="font-size:14px">إشعار بالتفعيل وتاريخ انتهاء الاشتراك.</span></li>
       </ol></div>`;
   shell(`
 <section class="p-hero" style="background:${darken(p.brand_color, 0.86)}">
@@ -668,7 +686,7 @@ async function orderView(id) {
           <div class="ohead">${logo(productOf(o))}<div class="m"><h1>${esc(o.product_name)}<small>${esc(o.plan_label)}</small></h1><span class="no">${esc(o.order_no)}</span></div>${statusChip(s)}</div>
           <div class="row-between" style="margin-top:18px;padding-top:16px;border-top:1px solid var(--line)"><span style="color:var(--muted)">الإجمالي</span><b style="font-size:24px">${egp(o.price_egp)}</b></div>
           ${timeline(s)}
-          ${s === 'payment_rejected' && reject ? `<p style="margin:16px 0 0;padding:12px 14px;border-radius:12px;background:#FDECEC;color:var(--danger)">سبب رفض الدفع: ${esc(reject)}</p>` : ''}
+          ${s === 'payment_rejected' && reject ? `<p style="margin:16px 0 0;padding:12px 14px;border-radius:12px;background:var(--red-tint);color:var(--st-red)">سبب رفض الدفع: ${esc(reject)}</p>` : ''}
         </div>
         ${canPay(o) ? '<div class="panel" id="pay"><div class="loading" style="padding:20px 0"><span class="spin"></span></div></div>' : ''}
         ${s === 'pending_payment' ? '<button class="btn btn-ghost" id="cancel" style="align-self:flex-start">إلغاء الطلب</button>' : ''}
@@ -699,7 +717,7 @@ async function paymentPanel(o) {
     <form id="pf" novalidate>
       <div class="pay-m" role="radiogroup" aria-label="طريقة الدفع">${methods.map((m, i) => `
         <label class="pm"><input type="radio" name="m" value="${esc(m.key)}" ${i === 0 ? 'checked' : ''}>
-          <b>${esc(m.label)}</b><span class="acc">${esc(m.account)}</span><span class="hold">${esc(m.holder || '')}</span>${m.hint ? `<span class="hold" style="color:#46506B">${esc(m.hint)} رقم طلبك: <b class="en">${esc(o.order_no)}</b></span>` : ''}
+          <b>${esc(m.label)}</b><span class="acc">${esc(m.account)}</span><span class="hold">${esc(m.holder || '')}</span>${m.hint ? `<span class="hold" style="color:var(--text-2)">${esc(m.hint)} رقم طلبك: <b class="en">${esc(o.order_no)}</b></span>` : ''}
           <button type="button" class="copy" data-copy="${esc(m.account)}">نسخ الرقم</button></label>`).join('')}</div>
       <div class="field"><label for="ref">رقم العملية</label><input id="ref" class="ltr" required><span class="note">بيظهر في رسالة التأكيد بعد التحويل</span></div>
       <div class="field"><label for="snd">الرقم اللي حوّلت منه</label><input id="snd" class="ltr" inputmode="tel" placeholder="01xxxxxxxxx" required></div>
