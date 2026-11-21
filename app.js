@@ -200,6 +200,7 @@ const STORE_ICON = {
   user: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
   search: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>',
 };
+const topPick = () => (state.products || []).filter((x) => x.is_featured).sort((a, b) => a.sort_order - b.sort_order)[0]?.id;
 function productCard(p) {
   const { cheapest, deal } = cardStats(p);
   const multi = p.plans.length > 1;
@@ -207,7 +208,7 @@ function productCard(p) {
   const eta = (cheapest.delivery_eta || 'خلال ساعتين').replace(' في مواعيد العمل', '');
   return `<article class="acard">
     <a class="aimg" href="#/p/${esc(p.slug)}" tabindex="-1" aria-hidden="true" style="--b:${esc(p.brand_color || '#2F55F0')}">
-      ${p.is_featured ? '<span class="abadge best">الأكثر طلبًا</span>' : ''}
+      ${p.id === topPick() ? '<span class="abadge best">الأكثر طلبًا</span>' : ''}
       ${logo(p)}
     </a>
     <div class="ainfo">
@@ -418,7 +419,7 @@ async function productView(slug) {
     <div class="row">
       ${logo(p, 'logo')}
       <div style="flex:1 1 300px;min-width:0">
-        <span class="eyebrow" style="color:#FFB27A">${p.is_featured ? 'BESTSELLER · ' : ''}${esc((p.category || '').toUpperCase())}</span>
+        <span class="eyebrow" style="color:#FFB27A">${p.id === topPick() ? 'BESTSELLER · ' : ''}${esc((p.category || '').toUpperCase())}</span>
         <h1>${esc(p.name)}</h1>
         <p>${esc(p.tagline)}</p>
       </div>
@@ -474,9 +475,10 @@ function loginView(params) {
     const u = qs('#u').value.trim().toLowerCase(), pw = qs('#pw').value;
     if (!u || !pw) return toast('اكتب اسم المستخدم وكلمة المرور', true);
     const b = e.submitter; b.disabled = true;
-    const { error } = await sb.auth.signInWithPassword({ email: `${u}@${EMAIL_DOMAIN}`, password: pw });
+    const { data, error } = await sb.auth.signInWithPassword({ email: `${u}@${EMAIL_DOMAIN}`, password: pw });
     b.disabled = false;
     if (error) return toast(error.message?.includes('Invalid') ? 'اسم المستخدم أو كلمة المرور غلط' : 'حصلت مشكلة، جرّب تاني', true);
+    state.session = data.session; await loadProfile();
     goAfterLogin();
   });
 }
@@ -520,7 +522,7 @@ function signupView() {
 }
 function verifyStep(v, ver) {
   const panel = qs('#sp');
-  const msg = `مرحبًا NEXO 👋 أنا ${v.n}، برجاء تأكيد رقمي في التطبيق\nكود: ${ver.code}`;
+  const msg = `مرحبًا NEXO 👋 أنا ${v.n}، برجاء تأكيد رقمي على NEXO Subs\nكود: ${ver.code}`;
   const waUrl = `https://wa.me/${ver.wa_number}?text=${encodeURIComponent(msg)}`;
   const local = ver.wa_number.startsWith('20') ? '0' + ver.wa_number.slice(2) : '+' + ver.wa_number;
   panel.innerHTML = `
@@ -543,7 +545,8 @@ function verifyStep(v, ver) {
         done = false;
         return toast({ username_taken: 'اسم المستخدم ده مستخدم قبل كده', whatsapp_taken: 'رقم الواتساب ده مسجّل بحساب تاني', not_verified: 'التأكيد انتهى، ابدأ من جديد' }[code] || 'حصلت مشكلة في إنشاء الحساب', true);
       }
-      await sb.auth.signInWithPassword({ email: `${v.u}@${EMAIL_DOMAIN}`, password: v.pw });
+      const li = await sb.auth.signInWithPassword({ email: `${v.u}@${EMAIL_DOMAIN}`, password: v.pw });
+      if (li.data?.session) { state.session = li.data.session; await loadProfile(); }
       toast('أهلًا بيك في NEXO 👋');
       goAfterLogin();
     } else if (data?.expired) {
@@ -638,7 +641,7 @@ async function ordersView() {
     <h1 style="margin:0 0 20px;font-size:32px">طلباتي</h1>
     ${error ? '<p class="empty">مقدرناش نحمّل طلباتك. جرّب تاني.</p>'
       : !data.length ? '<div class="panel empty">لسه مالكش طلبات. <a class="link" href="#/">اختار اشتراكك</a></div>'
-      : `<div class="olist">${data.map((o) => `<a class="orow" href="#/order/${o.id}">${logo(productOf(o))}<span class="m"><b>${esc(o.product_name)} · ${esc(o.plan_label)}</b><span class="en">${esc(o.order_no)}</span> · <span>${egp(o.price_egp)}</span></span>${statusChip(effective(o))}</a>`).join('')}</div>`}
+      : `<div class="olist">${data.map((o) => `<a class="orow" href="#/order/${o.id}">${logo(productOf(o))}<span class="m"><b>${esc(o.product_name)}</b><span class="meta"><span>${esc(o.plan_label)}</span><span>${egp(o.price_egp)}</span><span class="en">${esc(o.order_no)}</span></span></span>${statusChip(effective(o))}</a>`).join('')}</div>`}
   </div></div>`, { withFooter: false });
 }
 
@@ -662,7 +665,7 @@ async function orderView(id) {
     <div class="two">
       <div style="display:flex;flex-direction:column;gap:20px">
         <div class="panel">
-          <div class="ohead">${logo(productOf(o))}<div class="m"><h1>${esc(o.product_name)} · ${esc(o.plan_label)}</h1><span class="no">${esc(o.order_no)}</span></div>${statusChip(s)}</div>
+          <div class="ohead">${logo(productOf(o))}<div class="m"><h1>${esc(o.product_name)}<small>${esc(o.plan_label)}</small></h1><span class="no">${esc(o.order_no)}</span></div>${statusChip(s)}</div>
           <div class="row-between" style="margin-top:18px;padding-top:16px;border-top:1px solid var(--line)"><span style="color:var(--muted)">الإجمالي</span><b style="font-size:24px">${egp(o.price_egp)}</b></div>
           ${timeline(s)}
           ${s === 'payment_rejected' && reject ? `<p style="margin:16px 0 0;padding:12px 14px;border-radius:12px;background:#FDECEC;color:var(--danger)">سبب رفض الدفع: ${esc(reject)}</p>` : ''}
@@ -683,6 +686,8 @@ async function orderView(id) {
   chatPanel(o);
 }
 
+const plural = (n, one, two, few, many) => n === 1 ? one : n === 2 ? two : n >= 3 && n <= 10 ? `${n} ${few}` : `${n} ${many}`;
+const dur = (m) => { const h = Math.floor(m / 60), r = m % 60; return [h && plural(h, 'ساعة', 'ساعتين', 'ساعات', 'ساعة'), r && plural(r, 'دقيقة', 'دقيقتين', 'دقايق', 'دقيقة')].filter(Boolean).join(' و'); };
 async function paymentPanel(o) {
   const box = qs('#pay');
   const { data } = await sb.from('app_settings').select('value').eq('key', 'payment_methods').maybeSingle();
@@ -690,17 +695,18 @@ async function paymentPanel(o) {
   const mins = Math.max(0, Math.round((new Date(o.expires_at) - new Date()) / 60000));
   box.innerHTML = `
     <h2 style="margin:0 0 4px;font-size:20px">ادفع ${egp(o.price_egp)}</h2>
-    <p style="margin:0;color:var(--muted);font-size:14px">${o.status === 'payment_rejected' ? 'راجع بيانات التحويل وابعتها تاني.' : `حوّل المبلغ على واحد من دول، واكتب رقم العملية.${mins ? ` المهلة المتبقية: ${mins >= 60 ? Math.floor(mins / 60) + ' ساعة ' : ''}${mins % 60} دقيقة.` : ''}`}</p>
+    <p style="margin:0;color:var(--muted);font-size:14px">${o.status === 'payment_rejected' ? 'راجع بيانات التحويل وابعتها تاني.' : `حوّل المبلغ على واحد من دول، واكتب رقم العملية.${mins ? ` المهلة المتبقية: ${dur(mins)}.` : ''}`}</p>
     <form id="pf" novalidate>
       <div class="pay-m" role="radiogroup" aria-label="طريقة الدفع">${methods.map((m, i) => `
         <label class="pm"><input type="radio" name="m" value="${esc(m.key)}" ${i === 0 ? 'checked' : ''}>
-          <b>${esc(m.label)}</b><span class="acc">${esc(m.account)}</span><span class="hold">${esc(m.holder || '')}</span>
+          <b>${esc(m.label)}</b><span class="acc">${esc(m.account)}</span><span class="hold">${esc(m.holder || '')}</span>${m.hint ? `<span class="hold" style="color:#46506B">${esc(m.hint)} رقم طلبك: <b class="en">${esc(o.order_no)}</b></span>` : ''}
           <button type="button" class="copy" data-copy="${esc(m.account)}">نسخ الرقم</button></label>`).join('')}</div>
       <div class="field"><label for="ref">رقم العملية</label><input id="ref" class="ltr" required><span class="note">بيظهر في رسالة التأكيد بعد التحويل</span></div>
       <div class="field"><label for="snd">الرقم اللي حوّلت منه</label><input id="snd" class="ltr" inputmode="tel" placeholder="01xxxxxxxxx" required></div>
-      <div class="field"><label for="rc">صورة الإيصال (اختياري)</label><input id="rc" type="file" accept="image/png,image/jpeg" style="padding:12px 16px"></div>
+      <div class="field"><span style="font-size:14px;font-weight:600">صورة الإيصال (اختياري)</span><label class="file"><input id="rc" type="file" accept="image/png,image/jpeg"><span class="pick">اختار صورة</span><span class="fname" id="rcName">مفيش صورة لسه</span></label></div>
       <button class="btn btn-blue btn-block" type="submit">ابعت بيانات التحويل</button>
     </form>`;
+  qs('#rc').addEventListener('change', (e) => { qs('#rcName').textContent = e.target.files[0]?.name || 'مفيش صورة لسه'; });
   box.querySelectorAll('[data-copy]').forEach((b) => b.addEventListener('click', async (e) => {
     e.preventDefault();
     try { await navigator.clipboard.writeText(b.dataset.copy); toast('اتنسخ الرقم'); } catch { toast(b.dataset.copy); }
