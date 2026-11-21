@@ -228,14 +228,24 @@ function productCard(p) {
   </article>`;
 }
 function gridMark(products) {
-  const start = [2, 4, 8, 12];
-  const faint = ['f2', 'f1', '', 'f3', '', 'f1', 'f2', 'f1', '', 'f3', '', 'f3', '', 'f1', 'f2', 'f2', 'f1', 'f3', 'f1', 'f2', 'f2'];
-  return `<div class="grid-mark" id="gridMark" aria-hidden="true">${faint.map((f, i) => {
-    if (i === 10) return `<div class="core" style="--c:3;--r:1">${X_MARK('#2F55F0', 62)}</div>`;
-    const pi = start.indexOf(i);
-    const p = pi >= 0 ? products[pi] : null;
-    return `<div class="cell ${f || 'f3'}${p ? ' lit' : ''}" style="--c:${i % 7};--r:${Math.floor(i / 7)}">${p ? `<span class="lg">${logo(p)}</span>` : ''}</div>`;
-  }).join('')}</div>`;
+  // 3 صفوف مربعات بتتحرك باستمرار (زي شريط The Engineer for CV) والأيقونات ماشية مع مربعاتها
+  const n = products.length || 1;
+  const rows = [
+    { pat: [0, -1, -1, 2, -1, -1, 3, -1, 1, -1], dir: '', dur: 34 },
+    { pat: [-1, 1, -1, -1, 3, -1, 0, -1, -1, 2], dir: 'rev', dur: 40 },
+    { pat: [2, -1, 0, -1, -1, 1, -1, -1, 3, -1], dir: '', dur: 30 },
+  ];
+  const tile = (k, j) => {
+    const p = k >= 0 ? products[k % n] : null;
+    return p ? `<div class="mt lit">${logo(p)}</div>` : `<div class="mt f${(j % 3) + 1}"></div>`;
+  };
+  return `<div class="grid-mark" aria-hidden="true">
+    ${rows.map((r) => {
+      const set = r.pat.map(tile).join('');
+      return `<div class="mrow"><div class="mtrack ${r.dir}" style="--dur:${r.dur}s">${set}${set}</div></div>`;
+    }).join('')}
+    <div class="core">${X_MARK('#2F55F0', 62)}</div>
+  </div>`;
 }
 async function homeView() {
   loadingView();
