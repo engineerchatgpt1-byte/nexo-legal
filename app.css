@@ -452,3 +452,9 @@ main > .p-main { padding-left: max(clamp(18px, 4vw, 28px), calc((100% - var(--wr
 .site-head .drawer a { color: var(--head-muted); border-bottom-color: var(--head-line); }
 :root:not([data-theme="dark"]) .site-head .btn-white { background: #0B1020; color: #fff; }
 #toast { visibility: hidden; } #toast.show { visibility: visible; }
+/* بلور أقوى للخلفية من قسم الاشتراكات ولتحت (الهيرو يفضل واضح) */
+main > section:not(.hero):not(.p-hero), main > .page, main > .p-main {
+  -webkit-backdrop-filter: blur(18px) saturate(1.2); backdrop-filter: blur(18px) saturate(1.2); }
+.ssearch { min-width: 0; max-width: 100%; }
+.ssearch input { min-width: 0; width: 100%; }
+.store-top > div { min-width: 0; }
