@@ -257,7 +257,7 @@ async function homeView() {
   <div class="wrap">
     <span class="eyebrow">NEXO SUBSCRIPTIONS</span>
     <h1>اشتراكاتك العالمية<br><span>بعملتك المحلية</span></h1>
-    <p class="lead">اشتراكات رسمية في ${products.slice(0, 4).map((p) => esc(p.name.split(' ')[0])).join('، ')}، بالجنيه المصري، مفعّلة على حسابك وبمتابعة فريق حقيقي.</p>
+    <p class="lead">اشتراكاتك الرسمية بالجنيه المصري، مفعّلة على حسابك وبمتابعة فريق حقيقي.</p>
     <div class="ctas">
       <a class="btn btn-blue" href="#/" data-scroll="collection">اختار اشتراكك</a>
       <a class="btn btn-ghost-d" href="#/" data-scroll="how">شوف إزاي بتشتغل ${ICON.back}</a>
