@@ -462,7 +462,7 @@ async function productView(slug) {
   </div>
 </section>
 <div class="wrap p-main">
-  <div class="info">${POSTERS[p.slug] ? `<img class="p-poster" src="${POSTERS[p.slug].src}" width="${POSTERS[p.slug].w}" height="${POSTERS[p.slug].h}" alt="${esc(p.name)}" decoding="async">` : ''}<div id="info" style="display:flex;flex-direction:column;gap:48px">${infoHtml(sel)}</div></div>
+  <div class="info" id="info">${infoHtml(sel)}</div>
   <aside class="order-box" aria-label="اطلب الاشتراك">
     <fieldset style="border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:10px">
       <legend class="eyebrow" style="color:var(--muted-d);margin-bottom:12px;padding:0">CHOOSE YOUR PLAN</legend>
