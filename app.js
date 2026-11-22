@@ -7,6 +7,7 @@ const EMAIL_DOMAIN = 'users.nexosubs.app';
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, autoRefreshToken: true } });
 
 const app = document.getElementById('app');
+const POSTERS = { claude: { src: 'assets/cards/claude.webp', sm: 'assets/cards/claude-sm.webp', w: 788, h: 1997 } };
 const LOGOS = ['chatgpt', 'claude', 'linkedin', 'gemini', 'grok', 'higgsfield'];
 const CATS = { ai: 'ذكاء اصطناعي', design: 'تصميم', career: 'شغل وكارير', productivity: 'إنتاجية' };
 const STATUS = {
@@ -226,9 +227,9 @@ function productCard(p) {
   const [whole] = String(Number(cheapest.price_egp).toLocaleString('en-US')).split('.');
   const eta = (cheapest.delivery_eta || 'خلال ساعتين').replace(' في مواعيد العمل', '');
   return `<article class="acard">
-    <a class="aimg" href="#/p/${esc(p.slug)}" tabindex="-1" aria-hidden="true" style="--b:${esc(p.brand_color || '#E8412C')}">
+    <a class="aimg${POSTERS[p.slug] ? ' has-poster' : ''}" href="#/p/${esc(p.slug)}" tabindex="-1" aria-hidden="true" style="--b:${esc(p.brand_color || '#E8412C')}">
       ${p.id === topPick() ? '<span class="abadge best">الأكثر طلبًا</span>' : ''}
-      ${logo(p)}
+      ${POSTERS[p.slug] ? `<img class="poster" src="${POSTERS[p.slug].sm}" srcset="${POSTERS[p.slug].sm} 394w, ${POSTERS[p.slug].src} 788w" sizes="(max-width: 600px) 40vw, 300px" width="${POSTERS[p.slug].w}" height="${POSTERS[p.slug].h}" alt="" loading="lazy" decoding="async">` : logo(p)}
     </a>
     <div class="ainfo">
       <span class="acat">${esc(CATS[p.category] || 'اشتراك')}</span>
@@ -461,7 +462,7 @@ async function productView(slug) {
   </div>
 </section>
 <div class="wrap p-main">
-  <div class="info" id="info">${infoHtml(sel)}</div>
+  <div class="info">${POSTERS[p.slug] ? `<img class="p-poster" src="${POSTERS[p.slug].src}" width="${POSTERS[p.slug].w}" height="${POSTERS[p.slug].h}" alt="${esc(p.name)}" decoding="async">` : ''}<div id="info" style="display:flex;flex-direction:column;gap:48px">${infoHtml(sel)}</div></div>
   <aside class="order-box" aria-label="اطلب الاشتراك">
     <fieldset style="border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:10px">
       <legend class="eyebrow" style="color:var(--muted-d);margin-bottom:12px;padding:0">CHOOSE YOUR PLAN</legend>
