@@ -38,8 +38,8 @@ function toast(msg, err = false) {
 const X_MARK = (stroke = '#FFFFFF', size = 28) => `<svg width="${size}" height="${size}" viewBox="0 0 30 30" aria-hidden="true"><path d="M5 5L25 25M25 5L5 25" stroke="${stroke}" stroke-width="4.2" stroke-linecap="round"/><circle cx="15" cy="15" r="4.4" fill="#FF7A1F"/></svg>`;
 const ICON = {
   back: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>',
-  check: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2F55F0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>',
-  tick: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2F55F0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>',
+  check: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8412C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>',
+  tick: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#E8412C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>',
   orders: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>',
   user: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
   sun: '<svg class="sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></svg>',
@@ -58,7 +58,7 @@ function darken(hex, amt = 0.82) {
 }
 function logo(p, cls = '') {
   if (LOGOS.includes(p.slug)) return `<img class="${cls}" src="assets/logos/${p.slug}.png" alt="" width="84" height="84" loading="lazy">`;
-  return `<span class="lt ${cls}" style="background:${esc(p.brand_color || '#2F55F0')}" aria-hidden="true">${esc((p.name || '?')[0])}</span>`;
+  return `<span class="lt ${cls}" style="background:${esc(p.brand_color || '#E8412C')}" aria-hidden="true">${esc((p.name || '?')[0])}</span>`;
 }
 const normPhone = (v) => {
   let s = String(v || '').trim().replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[\s\-()]/g, '');
@@ -226,7 +226,7 @@ function productCard(p) {
   const [whole] = String(Number(cheapest.price_egp).toLocaleString('en-US')).split('.');
   const eta = (cheapest.delivery_eta || 'خلال ساعتين').replace(' في مواعيد العمل', '');
   return `<article class="acard">
-    <a class="aimg" href="#/p/${esc(p.slug)}" tabindex="-1" aria-hidden="true" style="--b:${esc(p.brand_color || '#2F55F0')}">
+    <a class="aimg" href="#/p/${esc(p.slug)}" tabindex="-1" aria-hidden="true" style="--b:${esc(p.brand_color || '#E8412C')}">
       ${p.id === topPick() ? '<span class="abadge best">الأكثر طلبًا</span>' : ''}
       ${logo(p)}
     </a>
@@ -664,7 +664,7 @@ const ORDER_COLS = 'id, order_no, product_name, plan_label, price_egp, status, p
 const effective = (o) => (o.status === 'pending_payment' && new Date(o.expires_at) < new Date()) ? 'expired' : o.status;
 const canPay = (o) => ['pending_payment', 'payment_rejected'].includes(effective(o));
 const statusChip = (s) => `<span class="status ${STATUS[s]?.[1] || ''}">${esc(STATUS[s]?.[0] || s)}</span>`;
-const productOf = (o) => (state.products || []).find((p) => o.product_name?.startsWith(p.name)) || { name: o.product_name, slug: '', brand_color: '#2F55F0' };
+const productOf = (o) => (state.products || []).find((p) => o.product_name?.startsWith(p.name)) || { name: o.product_name, slug: '', brand_color: '#E8412C' };
 
 async function ordersView() {
   if (!state.session) return needLogin('#/orders');

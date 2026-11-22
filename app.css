@@ -2,19 +2,19 @@
 :root {
   --bg: #FFFFFF; --surface: #FFFFFF; --soft: #F3F5F9; --store: #EEF1F6; --img-bg: #F6F7FA; --chip-bg: #EEF1F8;
   --text: #0B1020; --text-2: #46506B; --muted: #5B6480; --line: #E6E8EF; --line-2: #D5DAE6; --line-3: #C9CFDD;
-  --chat-bg: #FAFBFD; --field-2: #F2F4F8; --blue-tint: #EEF2FF; --orange-tint: #FFF1E6; --green-tint: #E3F6F3; --red-tint: #FDECEC;
-  --st-blue: #1E3FD0; --st-orange: #B85410; --st-green: #138A7D; --st-red: #C62C2C; --deal: #CC0C39; --sys-bg: #FFF4EA; --sys-line: #FFE0C4;
+  --chat-bg: #FAFBFD; --field-2: #F2F4F8; --blue-tint: #EEF2E8; --orange-tint: #FFF1E6; --green-tint: #E3F6F3; --red-tint: #FDECEC;
+  --st-blue: #4F6B40; --st-orange: #B85410; --st-green: #138A7D; --st-red: #C62C2C; --deal: #CC0C39; --sys-bg: #FFF4EA; --sys-line: #FFE0C4;
   color-scheme: light;
 }
 :root[data-theme="dark"] {
   --bg: #0B0E17; --surface: #131826; --soft: #0F1320; --store: #0E121C; --img-bg: #10141F; --chip-bg: #1A2032;
   --text: #EEF1F8; --text-2: #B7BED2; --muted: #8C95B0; --line: #222839; --line-2: #2E3550; --line-3: #3A4263;
-  --chat-bg: #0F1320; --field-2: #1A2032; --blue-tint: rgba(47,85,240,.18); --orange-tint: rgba(255,122,31,.16); --green-tint: rgba(79,209,191,.14); --red-tint: rgba(255,90,90,.14);
-  --st-blue: #9FB3FF; --st-orange: #FFB27A; --st-green: #5FD8C6; --st-red: #FF9090; --deal: #FF7A8A; --sys-bg: rgba(255,122,31,.10); --sys-line: rgba(255,122,31,.25);
+  --chat-bg: #0F1320; --field-2: #1A2032; --blue-tint: rgba(232,65,44,.18); --orange-tint: rgba(255,122,31,.16); --green-tint: rgba(79,209,191,.14); --red-tint: rgba(255,90,90,.14);
+  --st-blue: #B5C6A3; --st-orange: #FFB27A; --st-green: #5FD8C6; --st-red: #FF9090; --deal: #FF7A8A; --sys-bg: rgba(255,122,31,.10); --sys-line: rgba(255,122,31,.25);
   color-scheme: dark;
 }
 :root[data-theme="dark"] .steps li.last, :root[data-theme="dark"] .order-box { background: #161C2E; border: 1px solid var(--line-2); }
-:root[data-theme="dark"] .btn-buy { background: var(--blue); } :root[data-theme="dark"] .btn-buy:hover { background: #2448DA; }
+:root[data-theme="dark"] .btn-buy { background: var(--blue); } :root[data-theme="dark"] .btn-buy:hover { background: #CF3420; }
 :root[data-theme="dark"] .chip[aria-pressed="true"], :root[data-theme="dark"] .fopt:has(input:checked) { background: var(--blue); border-color: var(--blue); color: #fff; }
 :root[data-theme="dark"] .acard:hover { box-shadow: 0 18px 40px -24px rgba(0,0,0,.8); }
 :root[data-theme="dark"] .hero { border-bottom: 1px solid var(--line); }
@@ -27,11 +27,11 @@
   --ink: #07090F;
   --ink-2: #10131F;
   --line-d: #1B2032;
-  --line-d2: #252B40;
+  --line-d2: #2E3628;
   --text-d: #B7BED2;
   --muted-d: #8C95B0;
-  --blue: #2F55F0;
-  --blue-soft: #8EA5FF;
+  --blue: #E8412C;
+  --blue-soft: #B5C6A3;
   --orange: #FF7A1F;
   --danger: #C62C2C;
   --ok: #138A7D;
@@ -61,7 +61,7 @@ button { cursor: pointer; }
 .btn:active { transform: scale(.98); }
 .btn[disabled] { opacity: .55; cursor: not-allowed; }
 .btn-blue { background: var(--blue); color: #fff; }
-.btn-blue:hover { background: #2448DA; }
+.btn-blue:hover { background: #CF3420; }
 .btn-white { background: #fff; color: var(--ink); }
 .btn-ghost-d { border: 1px solid var(--line-d2); color: #fff; background: transparent; }
 .btn-ghost { border: 1px solid var(--line-2); background: var(--surface); color: var(--text); }
@@ -104,14 +104,14 @@ button { cursor: pointer; }
 .mtrack { display: flex; gap: var(--g); width: max-content; animation: slide var(--dur) linear infinite; will-change: transform; }
 .mtrack.rev { animation-direction: reverse; }
 .mt { flex: none; width: var(--t); height: var(--t); border-radius: calc(var(--t) * .25); border: 1px solid var(--line-d); display: flex; align-items: center; justify-content: center; }
-.mt.lit { background: var(--ink-2); border-color: #262C42; }
+.mt.lit { background: var(--ink-2); border-color: #3A4433; }
 .mt img, .mt .lt { width: 57%; height: 57%; border-radius: 26%; box-shadow: 0 10px 24px -10px rgba(0,0,0,.8); font-size: calc(var(--t) * .3); }
-.mt.f1 { border-color: #12151F; } .mt.f2 { border-color: #161A28; } .mt.f3 { border-color: #252B40; }
+.mt.f1 { border-color: #1A1F17; } .mt.f2 { border-color: #20261C; } .mt.f3 { border-color: #2E3628; }
 .grid-mark .core { position: absolute; z-index: 2; left: 50%; top: 50%; width: var(--t); height: var(--t); transform: translate(-50%, -50%); border-radius: calc(var(--t) * .25); background: #fff; display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 0 0 calc(var(--g) * .6) var(--ink), 0 0 0 calc(var(--g) * .6 + var(--t) * .07) rgba(47,85,240,.22), 0 30px 80px -10px rgba(47,85,240,.6); animation: glow 4s ease-in-out infinite; }
+  box-shadow: 0 0 0 calc(var(--g) * .6) var(--ink), 0 0 0 calc(var(--g) * .6 + var(--t) * .07) rgba(232,65,44,.22), 0 30px 80px -10px rgba(232,65,44,.6); animation: glow 4s ease-in-out infinite; }
 .grid-mark .core svg { width: 55%; height: 55%; }
 @keyframes slide { from { transform: translateX(0); } to { transform: translateX(calc(-50% - var(--g) / 2)); } }
-@keyframes glow { 50% { box-shadow: 0 0 0 calc(var(--g) * .6) var(--ink), 0 0 0 calc(var(--g) * .6 + var(--t) * .1) rgba(47,85,240,.28), 0 30px 90px -6px rgba(47,85,240,.75); } }
+@keyframes glow { 50% { box-shadow: 0 0 0 calc(var(--g) * .6) var(--ink), 0 0 0 calc(var(--g) * .6 + var(--t) * .1) rgba(232,65,44,.28), 0 30px 90px -6px rgba(232,65,44,.75); } }
 @media (max-width: 960px) { .grid-mark { --t: 74px; --g: 12px; } }
 @media (max-width: 560px) { .grid-mark { --t: 52px; --g: 9px; width: 100%; } }
 @media (prefers-reduced-motion: reduce) { .mtrack, .grid-mark .core { animation: none !important; } html { scroll-behavior: auto; } }
@@ -268,7 +268,7 @@ button { cursor: pointer; }
 .order-box { flex: 1 1 340px; min-width: 0; max-width: 440px; border-radius: 28px; background: var(--ink); color: #fff; padding: 26px; display: flex; flex-direction: column; gap: 16px; position: sticky; top: 92px; }
 @media (max-width: 900px) { .order-box { position: static; max-width: none; order: -1; } }
 .plan { display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 16px; border: 1px solid var(--line-d2); cursor: pointer; }
-.plan:has(input:checked) { border: 2px solid var(--blue); background: #10162D; padding: 15px; }
+.plan:has(input:checked) { border: 2px solid var(--blue); background: #2A1E1B; padding: 15px; }
 .plan input { width: 18px; height: 18px; accent-color: var(--blue); margin: 0; }
 .plan .lbl { flex: 1; }
 .plan .save { display: block; font-size: 13px; color: var(--blue-soft); }
@@ -288,7 +288,7 @@ button { cursor: pointer; }
 .field label { font-size: 14px; font-weight: 600; }
 .field input, .field select, .field textarea { min-height: 52px; padding: 0 16px; border-radius: 14px; border: 1px solid var(--line-2); background: var(--surface); font-size: 16px; }
 .field textarea { padding: 12px 16px; min-height: 96px; }
-.field input:focus, .field select:focus, .field textarea:focus { outline: 0; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(47,85,240,.15); }
+.field input:focus, .field select:focus, .field textarea:focus { outline: 0; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(232,65,44,.15); }
 .field .err { color: var(--danger); font-size: 13px; min-height: 0; }
 .field .note { color: var(--muted); font-size: 13px; }
 .ltr { direction: ltr; text-align: left; }
@@ -342,7 +342,7 @@ button { cursor: pointer; }
 .bub.pending { opacity: .7; }
 .chat form { display: flex; gap: 8px; align-items: flex-end; padding: 10px; border-top: 1px solid var(--line); }
 .chat textarea { flex: 1; resize: none; min-height: 46px; max-height: 140px; border-radius: 22px; border: 0; background: var(--field-2); padding: 12px 16px; font-size: 15px; }
-.chat textarea:focus { outline: 2px solid rgba(47,85,240,.3); }
+.chat textarea:focus { outline: 2px solid rgba(232,65,44,.3); }
 .send { width: 46px; height: 46px; border-radius: 50%; border: 0; background: var(--blue); color: #fff; display: inline-flex; align-items: center; justify-content: center; flex: none; }
 .attach { width: 46px; height: 46px; border-radius: 50%; border: 0; background: transparent; color: var(--muted); display: inline-flex; align-items: center; justify-content: center; flex: none; }
 .two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
@@ -391,7 +391,7 @@ html, body { overflow-x: clip; }
 @keyframes twinkle { 0%, 100% { opacity: .25; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.15); } }
 .sky-moon { position: absolute; left: 7%; top: clamp(28px, 6vw, 70px); width: clamp(54px, 8vw, 96px); aspect-ratio: 1; border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #FFFDF2 0%, #F3EDD3 55%, #DCD3B0 100%);
-  box-shadow: 0 0 40px 8px rgba(255,246,210,.35), 0 0 120px 40px rgba(142,165,255,.18); animation: float 9s ease-in-out infinite; }
+  box-shadow: 0 0 40px 8px rgba(255,246,210,.35), 0 0 120px 40px rgba(156,175,136,.18); animation: float 9s ease-in-out infinite; }
 .sky-moon b { position: absolute; border-radius: 50%; background: rgba(170,160,120,.28); }
 .sky-moon b:nth-child(1) { width: 22%; height: 22%; left: 52%; top: 26%; } .sky-moon b:nth-child(2) { width: 14%; height: 14%; left: 28%; top: 58%; } .sky-moon b:nth-child(3) { width: 10%; height: 10%; left: 62%; top: 64%; }
 .shoot { position: absolute; width: 120px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, rgba(255,255,255,0), #fff); opacity: 0; transform: rotate(-28deg); }
@@ -413,17 +413,17 @@ html, body { overflow-x: clip; }
 
 /* الهيرو في الوضع النهاري: نص غامق فوق السماء الزرقا ومربعات زجاجية */
 :root:not([data-theme="dark"]) .hero { color: #0B1020; }
-:root:not([data-theme="dark"]) .hero .eyebrow { color: #1E3FD0; }
-:root:not([data-theme="dark"]) .hero h1 span { color: #2F55F0; }
+:root:not([data-theme="dark"]) .hero .eyebrow { color: #4F6B40; }
+:root:not([data-theme="dark"]) .hero h1 span { color: #E8412C; }
 :root:not([data-theme="dark"]) .hero p.lead { color: #24324F; font-weight: 400; }
 :root:not([data-theme="dark"]) .hero .btn-ghost-d { color: #0B1020; border-color: rgba(11,16,32,.25); background: rgba(255,255,255,.35); }
 :root:not([data-theme="dark"]) .hero .mt { border-color: rgba(255,255,255,.75); background: rgba(255,255,255,.22); backdrop-filter: blur(2px); }
 :root:not([data-theme="dark"]) .hero .mt.lit { background: rgba(255,255,255,.7); border-color: #fff; }
 :root:not([data-theme="dark"]) .hero .facts { border-top-color: rgba(11,16,32,.12); }
 :root:not([data-theme="dark"]) .hero .facts > div { border-color: rgba(11,16,32,.12); }
-:root:not([data-theme="dark"]) .hero .facts .k { color: #1E3FD0; }
+:root:not([data-theme="dark"]) .hero .facts .k { color: #4F6B40; }
 :root:not([data-theme="dark"]) .hero .facts .s { color: #33415F; }
-:root[data-theme="dark"] .hero .mt.lit { background: rgba(16,19,31,.85); }
+:root[data-theme="dark"] .hero .mt.lit { background: rgba(27,32,24,.85); }
 @media (prefers-reduced-motion: reduce) { .sky *, .sky *::before { animation: none !important; } }
 
 /* ---------- السما خلفية للموقع كله ---------- */
@@ -462,7 +462,7 @@ main > section:not(.hero):not(.p-hero), main > .page, main > .p-main {
 /* =========================================================
    ضبط الألوان والخطوط (نظام موحّد)
    ========================================================= */
-:root { --primary: #2F55F0; --primary-h: #2448DA; --accent: #FF7A1F; --accent-ink: #C2560F; --accent-tint: #FFF1E6; }
+:root { --primary: #E8412C; --primary-h: #CF3420; --accent: #FF7A1F; --accent-ink: #C2560F; --accent-tint: #FFF1E6; }
 :root[data-theme="dark"] { --accent-ink: #FFB27A; --accent-tint: rgba(255,122,31,.16); }
 
 /* الخطوط: Plex Arabic للنص كله، Space Grotesk للأرقام والعناوين الإنجليزي الصغيرة بس */
@@ -488,7 +488,7 @@ p, .lead, .txt p, .faq p, .steps .d, .asub { line-height: 1.85; }
 .btn-blue, .btn-buy, :root[data-theme="dark"] .btn-buy { background: var(--primary); color: #fff; }
 .btn-blue:hover, .btn-buy:hover, :root[data-theme="dark"] .btn-buy:hover { background: var(--primary-h); }
 .btn { font-weight: 600; letter-spacing: 0; }
-.btn-buy { box-shadow: 0 8px 20px -12px rgba(47,85,240,.7); }
+.btn-buy { box-shadow: 0 8px 20px -12px rgba(232,65,44,.7); }
 
 /* اختيارات الفلاتر والتصنيفات بنفس لون البراند */
 .chip[aria-pressed="true"], .fopt:has(input:checked) { background: var(--primary) !important; border-color: var(--primary) !important; color: #fff !important; }
@@ -505,11 +505,11 @@ p, .lead, .txt p, .faq p, .steps .d, .asub { line-height: 1.85; }
 /* أخضر واحد لكل علامات "تمام" */
 .aperks li.ok, .aperks li.ok svg, .fgroup.trust svg { color: var(--st-green); }
 .checks svg path { stroke: var(--primary); }
-:root[data-theme="dark"] .checks svg path { stroke: #8EA5FF; }
+:root[data-theme="dark"] .checks svg path { stroke: #B5C6A3; }
 
 /* روابط وأيقونات */
 .link, .copy { color: var(--primary); }
-:root[data-theme="dark"] .link, :root[data-theme="dark"] .copy, :root[data-theme="dark"] .attl a:hover { color: #9FB3FF; }
+:root[data-theme="dark"] .link, :root[data-theme="dark"] .copy, :root[data-theme="dark"] .attl a:hover { color: #B5C6A3; }
 .attl a:hover { color: var(--primary); }
 
 /* مقاسات نص متناسقة على الموبايل */
@@ -521,3 +521,56 @@ p, .lead, .txt p, .faq p, .steps .d, .asub { line-height: 1.85; }
 }
 .site-head .btn-white, :root:not([data-theme="dark"]) .site-head .btn-white { background: var(--primary); color: #fff; }
 .site-head .btn-white:hover { background: var(--primary-h); }
+
+/* =========================================================
+   باليت جديدة: Sage #9CAF88 · Off-White #F7F5EF · Tomato Red #E8412C
+   ========================================================= */
+:root {
+  --ink: #1E241A; --ink-2: #283023; --line-d: #343D2E; --line-d2: #3E4836; --text-d: #C9D1BF; --muted-d: #9AA38F;
+  --blue: #E8412C; --blue-soft: #B5C6A3; --primary: #E8412C; --primary-h: #CF3420;
+  --sage: #9CAF88; --sage-d: #5E7A4E; --sage-dd: #4F6B40;
+  --accent: #E8412C; --accent-ink: #C2341F; --accent-tint: #FDECE8;
+  --bg: #F7F5EF; --surface: #FFFFFF; --soft: #F7F5EF; --store: #EFECE3; --img-bg: #F3F1EA; --chip-bg: #ECEADF;
+  --text: #1E241A; --text-2: #4A5443; --muted: #6B7363; --line: #E4E1D6; --line-2: #D6D2C4; --line-3: #C5C0AE;
+  --chat-bg: #FAF9F5; --field-2: #F0EEE6; --blue-tint: #EEF2E8; --st-blue: #4F6B40;
+  --veil: rgba(247,245,239,.6); --veil-2: rgba(239,236,227,.72);
+  --head-fg: #1E241A; --head-muted: #4A5443; --head-bg: rgba(247,245,239,.72); --head-line: rgba(30,36,26,.08); --head-hover: rgba(30,36,26,.07);
+}
+:root[data-theme="dark"] {
+  --bg: #10130E; --surface: #191D16; --soft: #141811; --store: #12160F; --img-bg: #161A13; --chip-bg: #222820;
+  --text: #EEF0E8; --text-2: #C2C9B8; --muted: #959D8B; --line: #262C22; --line-2: #333A2D; --line-3: #434B3B;
+  --chat-bg: #141811; --field-2: #222820; --blue-tint: rgba(156,175,136,.16); --st-blue: #B5C6A3;
+  --accent-ink: #FF8B78; --accent-tint: rgba(232,65,44,.16); --deal: #FF8B78;
+  --veil: rgba(16,19,14,.45); --veil-2: rgba(18,22,15,.6);
+  --head-bg: rgba(16,19,14,.6);
+}
+/* السما: نهار سيج هادي، وليل زيتوني غامق */
+.sky .day { background: linear-gradient(180deg, #A9BC96 0%, #C7D4B8 38%, #E6EBDC 72%, #F7F5EF 100%); }
+.sky .night { background: radial-gradient(120% 70% at 20% 0%, #23301F 0%, #121810 45%, #0A0D09 100%); }
+/* الهيرو في النهار */
+:root:not([data-theme="dark"]) .hero .eyebrow, :root:not([data-theme="dark"]) .hero .facts .k { color: var(--sage-dd); }
+:root:not([data-theme="dark"]) .hero h1 { color: #1E241A; }
+:root:not([data-theme="dark"]) .hero h1 span { color: var(--primary); }
+:root:not([data-theme="dark"]) .hero p.lead { color: #3A4434; }
+:root:not([data-theme="dark"]) .hero .facts .s { color: #4A5443; }
+:root:not([data-theme="dark"]) .hero .btn-ghost-d { color: #1E241A; border-color: rgba(30,36,26,.25); background: rgba(247,245,239,.45); }
+:root:not([data-theme="dark"]) .hero .facts, :root:not([data-theme="dark"]) .hero .facts > div { border-color: rgba(30,36,26,.12); }
+.eyebrow { color: var(--sage-d); }
+:root[data-theme="dark"] .eyebrow { color: var(--sage); }
+/* الشات: رسايلي بالسيج الغامق بدل الأحمر علشان العين ترتاح */
+.bub.me { background: var(--sage-d); }
+.send { background: var(--primary); }
+/* اختيار الفلاتر على الديسكتوب بخلفية سيج */
+@media (min-width: 901px) { .fopt:has(input:checked) { background: var(--blue-tint) !important; color: var(--text) !important; } }
+/* أيقونات الصح بالسيج */
+.checks svg path { stroke: var(--sage-d); } :root[data-theme="dark"] .checks svg path { stroke: var(--sage); }
+.timeline li.done .d svg path { stroke: var(--sage-d); }
+.link, .copy { color: var(--primary); } :root[data-theme="dark"] .link, :root[data-theme="dark"] .copy { color: #FF8B78; }
+.status.green { background: var(--blue-tint); color: var(--sage-dd); } :root[data-theme="dark"] .status.green { color: var(--sage); }
+.plan:has(input:checked) { background: rgba(232,65,44,.12); }
+.plan .save, .p-hero .eyebrow { color: #F5A99C !important; }
+.cta-band { background: var(--primary); }
+.cta-band p { color: #FFE3DD; }
+.steps li.last .n { color: var(--primary); }
+
+:root { --st-green: #5E7A4E; --ok: #5E7A4E; } :root[data-theme="dark"] { --st-green: #B5C6A3; }
