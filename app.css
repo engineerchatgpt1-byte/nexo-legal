@@ -527,3 +527,58 @@ p, .lead, .txt p, .faq p, .steps .d, .asub { line-height: 1.85; }
 .aimg .poster { width: 100%; height: 100%; object-fit: cover; object-position: top center; border-radius: 0; box-shadow: none; aspect-ratio: auto; transition: transform .35s ease; }
 .acard:hover .aimg .poster { transform: scale(1.03); }
 @media (max-width: 600px) { .aimg.has-poster { aspect-ratio: 788 / 1997; align-self: flex-start; } }
+
+/* =========================================================
+   باليت 60/30/10: Midnight Black · Electric Blue · Sunset Orange #FF7A1A
+   ========================================================= */
+:root {
+  --ink: #08090D; --ink-2: #111319; --line-d: #1C1F2A; --line-d2: #262A38; --text-d: #B4BACB; --muted-d: #848CA3;
+  --eblue: #3D63F2; --eblue-l: #7E9BFF; --blue: #3D63F2; --blue-soft: #7E9BFF;
+  --primary: #FF7A1A; --primary-h: #F26A08; --accent: #FF7A1A; --accent-ink: #C25A0C; --accent-tint: #FFF1E6;
+}
+:root[data-theme="dark"] {
+  --bg: #08090D; --surface: #101219; --soft: #0C0E13; --store: #0A0B10; --img-bg: #0E1016; --chip-bg: #171A24;
+  --text: #F2F4F8; --text-2: #B4BACB; --muted: #848CA3; --line: #1C1F2A; --line-2: #262A38; --line-3: #343A4D;
+  --chat-bg: #0C0E13; --field-2: #171A24; --blue-tint: rgba(61,99,242,.16); --st-blue: #9DB2FF; --accent-ink: #FFA45E;
+  --veil: rgba(8,9,13,.5); --veil-2: rgba(10,11,16,.66); --head-bg: rgba(8,9,13,.62);
+}
+/* الأزرار الأساسية برتقالي (10%) */
+.btn-blue, .btn-buy, :root[data-theme="dark"] .btn-buy, .site-head .btn-white, :root:not([data-theme="dark"]) .site-head .btn-white, .send { background: var(--primary); color: #fff; }
+.btn-blue:hover, .btn-buy:hover, :root[data-theme="dark"] .btn-buy:hover, .site-head .btn-white:hover { background: var(--primary-h); }
+.btn-blue, .btn-buy { box-shadow: 0 10px 30px -12px rgba(255,122,26,.75); }
+.site-head .btn-white { border-radius: 10px; }
+/* الأزرق (30%): اختيارات، روابط، علامات صح، الكلمة المميزة، التوهج */
+.chip[aria-pressed="true"], .fopt:has(input:checked) { background: var(--eblue) !important; border-color: var(--eblue) !important; color: #fff !important; }
+@media (min-width: 901px) { .fopt:has(input:checked) { background: var(--blue-tint) !important; color: var(--text) !important; border-color: transparent !important; } }
+.checks svg path { stroke: var(--eblue); } :root[data-theme="dark"] .checks svg path { stroke: var(--eblue-l); }
+.link, .copy, .attl a:hover { color: var(--eblue); } :root[data-theme="dark"] .link, :root[data-theme="dark"] .copy, :root[data-theme="dark"] .attl a:hover { color: var(--eblue-l); }
+.eyebrow { color: var(--eblue); } :root[data-theme="dark"] .eyebrow { color: var(--eblue-l); }
+.bub.me { background: var(--eblue); }
+.plan:has(input:checked) { border-color: var(--primary); background: rgba(255,122,26,.10); }
+.cta-band { background: linear-gradient(135deg, #2448DA, #3D63F2 60%, #5B7CFF); }
+.cta-band .btn-white { background: var(--primary); color: #fff; }
+/* الهيرو بتفاصيل Echo */
+.pill { display: inline-flex; align-items: center; gap: 10px; padding: 6px 14px 6px 6px; border-radius: 999px; font-size: 13.5px; font-weight: 500;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); color: inherit; transition: background .2s; }
+.pill:hover { background: rgba(255,255,255,.1); }
+.pill b { background: var(--primary); color: #fff; font-weight: 700; font-size: 12px; padding: 3px 10px; border-radius: 999px; }
+.pill span { opacity: .7; }
+:root:not([data-theme="dark"]) .hero .pill { background: rgba(255,255,255,.55); border-color: rgba(11,16,32,.12); color: #0B1020; }
+.hero h1 { margin-top: 22px; }
+.hero h1 em { font-family: 'Amiri', serif; font-style: italic; font-weight: 700; color: var(--eblue-l); font-size: 1.12em; line-height: 1; padding: 0 .06em; }
+:root:not([data-theme="dark"]) .hero h1 em { color: var(--eblue); }
+.hero .btn-ghost-d { border-radius: 12px; background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.14); }
+.hero .btn-blue { border-radius: 12px; }
+.glow-wrap { position: relative; }
+.glow-wrap::before { content: ""; position: absolute; left: 50%; top: 55%; width: min(1000px, 120%); height: 70%; transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, rgba(61,99,242,.55), rgba(61,99,242,.18) 55%, transparent 75%); filter: blur(30px); z-index: -1; pointer-events: none; }
+.glow-wrap .mt.lit { box-shadow: 0 0 0 1px rgba(126,155,255,.18), 0 12px 30px -12px rgba(61,99,242,.6); }
+/* السما بالليل على أسود منتصف الليل مع توهج أزرق خفيف */
+.sky .night { background: radial-gradient(90% 60% at 50% 105%, rgba(61,99,242,.28), transparent 60%), radial-gradient(120% 70% at 20% 0%, #121730 0%, #0A0C16 45%, #08090D 100%); }
+/* بادج الأكثر طلبًا والخصم برتقالي */
+.abadge.best, .adeal span { background: var(--primary); color: #fff; }
+.adeal { color: var(--accent-ink); }
+.site-head .head-actions .plain { font-weight: 500; }
+
+:root { --st-green: #3D63F2; } :root[data-theme="dark"] { --st-green: #8EA8FF; }
+.pill { white-space: nowrap; max-width: 100%; }

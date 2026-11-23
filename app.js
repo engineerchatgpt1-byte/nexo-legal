@@ -290,14 +290,14 @@ async function homeView() {
   shell(`
 <section class="dark hero">
   <div class="wrap">
-    <span class="eyebrow">NEXO SUBSCRIPTIONS</span>
-    <h1>اشتراكاتك العالمية<br><span>بعملتك المحلية</span></h1>
+    <a class="pill" href="#/" data-scroll="how"><b>جديد</b>اشتراكك يتفعّل خلال ساعتين <span aria-hidden="true">←</span></a>
+    <h1>اشتراكاتك العالمية<br>بعملتك <em>المحلية</em></h1>
     <p class="lead">اشتراكاتك الرسمية بالجنيه المصري، مفعّلة على حسابك وبمتابعة فريق حقيقي.</p>
     <div class="ctas">
       <a class="btn btn-blue" href="#/" data-scroll="collection">اختار اشتراكك</a>
-      <a class="btn btn-ghost-d" href="#/" data-scroll="how">شوف إزاي بتشتغل ${ICON.back}</a>
+      <a class="btn btn-ghost-d" href="#/" data-scroll="how">شوف إزاي بتشتغل <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="transform:scaleX(-1)"><path d="M6 4l14 8-14 8z"/></svg></a>
     </div>
-    ${gridMark(products)}
+    <div class="glow-wrap">${gridMark(products)}</div>
     <div class="facts">
       <div><div class="k">ACTIVATION</div><div class="v">خلال ساعتين</div><div class="s">في مواعيد العمل من تأكيد الدفع</div></div>
       <div><div class="k">PAYMENT</div><div class="v">بالجنيه المصري</div><div class="s">InstaPay أو Vodafone Cash</div></div>
