@@ -609,3 +609,93 @@ main > section:not(.hero):not(.p-hero), main > .page, main > .p-main { -webkit-b
 .order-box { background: linear-gradient(180deg, #121730, #0C0F1C) !important; border: 1px solid rgba(61,99,242,.3) !important; }
 .mini-facts { border-top-color: rgba(61,99,242,.35) !important; }
 .site-foot { border-top: 1px solid rgba(61,99,242,.18); }
+
+/* =========================================================
+   راحة القراءة على الموبايل (الموقع بيتعرض بعرض 980 فبنكبّر الخطوط والأزرار)
+   ========================================================= */
+html.mdesk body { font-size: 20px; }
+html.mdesk .site-head .bar { height: 88px; }
+html.mdesk .brand b { font-size: 26px; } html.mdesk .brand svg { width: 34px; height: 34px; }
+html.mdesk .nav { font-size: 19px; gap: 34px; }
+html.mdesk .icon-btn { width: 54px; height: 54px; } html.mdesk .icon-btn svg { width: 28px; height: 28px; }
+html.mdesk .head-actions .plain { font-size: 19px; }
+html.mdesk .btn { min-height: 64px; font-size: 20px; padding: 0 32px; }
+html.mdesk .btn-sm { min-height: 54px; font-size: 18px; padding: 0 24px; }
+html.mdesk .pill { font-size: 18px; padding: 8px 18px 8px 8px; } html.mdesk .pill b { font-size: 15px; padding: 4px 12px; }
+html.mdesk .hero p.lead { font-size: 23px; max-width: 760px; }
+html.mdesk .eyebrow { font-size: 15px; }
+html.mdesk .facts .k { font-size: 15px; } html.mdesk .facts .v { font-size: 30px; } html.mdesk .facts .s { font-size: 18px; }
+html.mdesk .h2 { font-size: 50px; }
+html.mdesk .txt p, html.mdesk .faq p { font-size: 21px; } html.mdesk .dots { font-size: 20px; }
+html.mdesk .steps .t { font-size: 25px; } html.mdesk .steps .d { font-size: 19px; } html.mdesk .steps .n { font-size: 46px; }
+html.mdesk .faq summary { font-size: 22px; padding: 26px 0; }
+html.mdesk .cta-band h2 { font-size: 54px; } html.mdesk .cta-band p { font-size: 22px; }
+/* المتجر */
+html.mdesk .store-body { grid-template-columns: 290px minmax(0, 1fr); }
+html.mdesk .ssearch { min-height: 64px; } html.mdesk .ssearch input { font-size: 19px; min-height: 60px; }
+html.mdesk .sbar { font-size: 18px; padding: 14px 18px; } html.mdesk .ssort select { font-size: 18px; min-height: 48px; }
+html.mdesk .fgroup > b { font-size: 19px; } html.mdesk .fopt { font-size: 19px; padding: 11px 12px; } html.mdesk .fopt input { width: 20px; height: 20px; }
+html.mdesk .fopt em { font-size: 16px; } html.mdesk .fgroup.trust { font-size: 17px; }
+html.mdesk .agrid { gap: 20px; }
+html.mdesk .acat { font-size: 15px; } html.mdesk .attl { font-size: 24px; } html.mdesk .asub { font-size: 18px; }
+html.mdesk .abadge { font-size: 15px; padding: 5px 12px; }
+html.mdesk .adeal { font-size: 17px; } html.mdesk .adeal span { font-size: 15px; padding: 4px 10px; }
+html.mdesk .aprice b { font-size: 38px; } html.mdesk .aprice .from, html.mdesk .aprice .per { font-size: 16px; } html.mdesk .aprice .cur { font-size: 18px; }
+html.mdesk .awas { font-size: 16px; }
+html.mdesk .aplans span { font-size: 15px; padding: 4px 10px; }
+html.mdesk .aperks { font-size: 17px; gap: 8px; } html.mdesk .aperks svg { width: 19px; height: 19px; }
+html.mdesk .btn-buy { min-height: 58px; font-size: 19px; }
+html.mdesk .ainfo { padding: 20px 22px 22px; gap: 8px; }
+/* موبايل التتبع */
+html.mdesk .phone { width: min(400px, 100%); }
+html.mdesk .bub { font-size: 17px; } html.mdesk .bub .who { font-size: 14px; } html.mdesk .bub .tm { font-size: 13px; }
+html.mdesk .status { font-size: 15px; padding: 6px 14px; }
+html.mdesk .chat .day { font-size: 14px; } html.mdesk .chat .sys { font-size: 15px; }
+/* صفحة الخدمة */
+html.mdesk .p-hero .crumb { font-size: 17px; } html.mdesk .p-hero p { font-size: 22px; }
+html.mdesk .mini-facts .k { font-size: 14px; } html.mdesk .mini-facts .v { font-size: 21px; }
+html.mdesk .checks li { font-size: 20px; padding: 18px 0; }
+html.mdesk .order-box { padding: 30px; gap: 18px; max-width: 470px; }
+html.mdesk .plan { padding: 18px; font-size: 19px; } html.mdesk .plan:has(input:checked) { padding: 17px; }
+html.mdesk .plan input { width: 22px; height: 22px; }
+html.mdesk .plan .save, html.mdesk .plan .was { font-size: 16px; } html.mdesk .plan .pr { font-size: 20px; }
+html.mdesk .total b { font-size: 38px; } html.mdesk .total span { font-size: 18px; }
+html.mdesk .order-box p { font-size: 16px !important; }
+/* الفورمز والدخول */
+html.mdesk .narrow { max-width: 620px; } html.mdesk .mid { max-width: 860px; }
+html.mdesk .panel { padding: 40px; } html.mdesk .panel h1 { font-size: 36px; } html.mdesk .panel .hint { font-size: 19px; }
+html.mdesk .field label, html.mdesk .field > span { font-size: 18px !important; }
+html.mdesk .field input, html.mdesk .field select, html.mdesk .field textarea { min-height: 62px; font-size: 19px; border-radius: 16px; }
+html.mdesk .field .note, html.mdesk .field .err { font-size: 16px; }
+html.mdesk .check { font-size: 18px; } html.mdesk .check input { width: 22px; height: 22px; }
+html.mdesk .alt { font-size: 18px; }
+html.mdesk .code-box .code { font-size: 48px; } html.mdesk .code-box .to, html.mdesk .wait { font-size: 17px; }
+html.mdesk .file .pick, html.mdesk .file .fname { font-size: 17px; }
+/* الطلبات والشات */
+html.mdesk .orow { padding: 20px; } html.mdesk .orow img, html.mdesk .orow .lt { width: 58px; height: 58px; }
+html.mdesk .orow .m b { font-size: 20px; } html.mdesk .orow .meta { font-size: 16px; }
+html.mdesk .ohead h1 { font-size: 27px; } html.mdesk .ohead h1 small { font-size: 18px; } html.mdesk .ohead .no { font-size: 16px; }
+html.mdesk .pm .acc { font-size: 23px; } html.mdesk .pm .hold, html.mdesk .copy { font-size: 16px; } html.mdesk .pm b { font-size: 19px; }
+html.mdesk .timeline li { font-size: 18px; }
+html.mdesk .chat textarea { font-size: 18px; min-height: 54px; } html.mdesk .send, html.mdesk .attach { width: 54px; height: 54px; }
+html.mdesk .acc-menu a, html.mdesk .acc-menu button { font-size: 18px; padding: 13px 14px; }
+html.mdesk .drawer a { font-size: 19px; }
+/* الفوتر */
+html.mdesk .foot-top { font-size: 18px; } html.mdesk .foot-top nav { font-size: 18px; gap: 12px; } html.mdesk .foot-bot { font-size: 15px; }
+html.mdesk #toast { font-size: 18px; padding: 14px 22px; }
+/* انتقال ناعم بين الأقسام (من غير خطوط حادة) */
+.hero { background: radial-gradient(60% 45% at 50% 0%, rgba(61,99,242,.22), transparent 70%), radial-gradient(60% 32% at 50% 82%, rgba(61,99,242,.26), transparent 72%), #08090D !important; }
+.sec-soft, .store { background: linear-gradient(180deg, #08090D 0%, #0B1022 22%, #0A0D18 65%, #08090D 100%) !important; }
+.facts { border-bottom: 0; }
+/* نصوص مكتوب مقاسها جوه الكود: تكبير على الموبايل */
+html.mdesk [style*="font-size:12px"] { font-size: 15px !important; }
+html.mdesk [style*="font-size:13px"] { font-size: 16px !important; }
+html.mdesk [style*="font-size:14px"] { font-size: 17px !important; }
+html.mdesk [style*="font-size:15px"] { font-size: 18px !important; }
+html.mdesk [style*="font-size:16px"] { font-size: 19px !important; }
+html.mdesk [style*="font-size:18px"] { font-size: 21px !important; }
+html.mdesk [style*="font-size:20px"] { font-size: 24px !important; }
+html.mdesk [style*="font-size:24px"] { font-size: 28px !important; }
+html.mdesk .phone .bub { max-width: 90% !important; }
+html.mdesk .orow .meta, html.mdesk .orow .meta span { font-size: 16px !important; }
+html.mdesk .bub .tm { font-size: 14px !important; }
