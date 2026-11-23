@@ -582,3 +582,30 @@ p, .lead, .txt p, .faq p, .steps .d, .asub { line-height: 1.85; }
 
 :root { --st-green: #3D63F2; } :root[data-theme="dark"] { --st-green: #8EA8FF; }
 .pill { white-space: nowrap; max-width: 100%; }
+
+/* =========================================================
+   تصميم واحد (بدون وضع نهاري/ليلي وبدون خلفية سما)
+   60% Midnight Black · 30% Electric Blue · 10% Sunset Orange
+   ========================================================= */
+.sky, .theme-btn { display: none !important; }
+:root, :root[data-theme="dark"] { --veil: #08090D; --veil-2: #0B0D13; color-scheme: dark; }
+html, body { background: #08090D; }
+main > section:not(.hero):not(.p-hero), main > .page, main > .p-main { -webkit-backdrop-filter: none; backdrop-filter: none; }
+/* الهيرو: أسود مع توهج أزرق فوق وتحت زي Echo */
+.hero { background: radial-gradient(60% 45% at 50% 0%, rgba(61,99,242,.22), transparent 70%), radial-gradient(70% 40% at 50% 100%, rgba(61,99,242,.28), transparent 70%), #08090D !important; }
+/* أقسام متبادلة بلمسة أزرق */
+.sec-soft, .store { background: linear-gradient(180deg, #0A0E1E 0%, #0B0D13 40%, #08090D 100%) !important; }
+.steps li { border-color: rgba(61,99,242,.28); background: linear-gradient(180deg, rgba(61,99,242,.10), rgba(61,99,242,.02)); }
+.steps .n { color: var(--eblue-l); }
+.steps li.last { background: linear-gradient(135deg, #2448DA, #3D63F2); border-color: transparent; }
+.steps li.last .n { color: #FFB26E; } .steps li.last .d { color: #DCE4FF; }
+.facts .k, .mini-facts .k { color: var(--eblue-l) !important; }
+.facts, .facts > div { border-color: rgba(61,99,242,.25) !important; }
+.faq details { border-color: rgba(61,99,242,.2); }
+.faq summary::after { color: var(--eblue-l); }
+.acard, .sbar, .sfilters, .ssearch, .panel, .orow, .chat { border: 1px solid rgba(61,99,242,.18) !important; }
+.acard:hover { border-color: rgba(61,99,242,.45) !important; box-shadow: 0 20px 50px -25px rgba(61,99,242,.45); }
+.phone { box-shadow: 0 0 0 1px rgba(61,99,242,.3), 0 40px 90px -30px rgba(61,99,242,.55); }
+.order-box { background: linear-gradient(180deg, #121730, #0C0F1C) !important; border: 1px solid rgba(61,99,242,.3) !important; }
+.mini-facts { border-top-color: rgba(61,99,242,.35) !important; }
+.site-foot { border-top: 1px solid rgba(61,99,242,.18); }

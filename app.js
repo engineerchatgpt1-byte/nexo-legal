@@ -112,10 +112,7 @@ function setTheme(t, save = true) {
   document.querySelectorAll('[data-theme-toggle]').forEach((b) => b.setAttribute('aria-label', t === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'));
   if (save) try { localStorage.setItem('nexo-theme', t); } catch {}
 }
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', (e) => {
-  let saved = null; try { saved = localStorage.getItem('nexo-theme'); } catch {}
-  if (!saved) setTheme(e.matches ? 'dark' : 'light', false);
-});
+
 
 // ---------------- الهيدر والفوتر ----------------
 function header() {
@@ -130,7 +127,6 @@ function header() {
       <a href="#/" data-scroll="faq">الأسئلة الشائعة</a>
     </nav>
     <div class="head-actions">
-      <button class="icon-btn theme-btn" data-theme-toggle aria-label="تبديل الوضع الليلي">${ICON.moon}${ICON.sun}</button>
       ${logged
         ? `<a class="icon-btn" href="#/orders" aria-label="طلباتي">${ICON.orders}</a>
            <button class="icon-btn" id="accBtn" aria-label="الحساب" aria-haspopup="true" aria-expanded="false">${ICON.user}</button>`
@@ -168,8 +164,6 @@ function bindChrome() {
   window.addEventListener('scroll', onScroll, { passive: true });
   state.cleanup.push(() => window.removeEventListener('scroll', onScroll));
   onScroll();
-  document.querySelectorAll('[data-theme-toggle]').forEach((b) => b.addEventListener('click', () => setTheme(currentTheme() === 'dark' ? 'light' : 'dark')));
-  setTheme(currentTheme(), false);
   qs('#menuBtn')?.addEventListener('click', (e) => {
     const d = qs('#drawer'); d.classList.toggle('open'); qs('#head').classList.toggle('menu-open', d.classList.contains('open'));
     e.currentTarget.setAttribute('aria-expanded', d.classList.contains('open'));
@@ -198,7 +192,6 @@ function bindChrome() {
   });
 }
 function shell(inner, { withFooter = true } = {}) {
-  if (!document.getElementById('skyBg')) { const t = document.createElement('div'); t.innerHTML = skyHtml(); const el = t.firstElementChild; el.id = 'skyBg'; document.body.prepend(el); }
   app.innerHTML = header() + `<main id="main">${inner}</main>` + (withFooter ? footer() : '');
   bindChrome();
   window.scrollTo(0, 0);
