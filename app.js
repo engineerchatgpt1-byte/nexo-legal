@@ -290,7 +290,7 @@ async function homeView() {
   shell(`
 <section class="dark hero">
   <div class="wrap">
-    <a class="pill" href="#/" data-scroll="how"><b>جديد</b>اشتراكك يتفعّل خلال ساعتين <span aria-hidden="true">←</span></a>
+    <a class="pill" href="#/" data-scroll="how"><b>سريع</b>اشتراكك يتفعّل خلال ساعتين <span aria-hidden="true">←</span></a>
     <h1>اشتراكاتك العالمية<br>بعملتك <em>المحلية</em></h1>
     <p class="lead">اشتراكاتك الرسمية بالجنيه المصري، مفعّلة على حسابك وبمتابعة فريق حقيقي.</p>
     <div class="ctas">
